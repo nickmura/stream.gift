@@ -32,18 +32,17 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-        <QueryClientProvider client={queryClient}>
-		<SuiClientProvider networks={networks} defaultNetwork="devnet">
-			<WalletProvider>
-                <body>
-                    <Header />
-                    <Modals />
-                    <main>{children}</main>
-                </body>
-			</WalletProvider>
-		</SuiClientProvider>
-	</QueryClientProvider>,
-
+            <body>
+                <QueryClientProvider client={queryClient}>
+                    <SuiClientProvider networks={networks} defaultNetwork="devnet">
+                        <WalletProvider>
+                            <Header />
+                            <Modals />
+                            <main>{children}</main>
+                        </WalletProvider>
+                    </SuiClientProvider>
+                </QueryClientProvider>
+            </body>
         </html>
     );
 }

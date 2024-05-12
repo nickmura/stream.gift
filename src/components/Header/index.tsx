@@ -5,7 +5,7 @@ export default function Header() {
         <header
             className="
                 flex items-center justify-end
-                border-b-2 border-white p-5"
+                border-b-2 border-white px-5 h-24"
         >
             <WalletButton />
         </header>

@@ -11,6 +11,7 @@ export default function Search() {
             <input
                 className="w-full"
                 placeholder="Search .sui name or portfolio..."
+                spellCheck={false}
             />
 
             <Image
