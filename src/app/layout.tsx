@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Ubuntu_Mono } from "next/font/google";
 
 import Header from "@/components/Header";
+import Wrapper from "@/components/Wrapper";
 import Modals from "@/components/Modal/Modals";
 
 import "./globals.css";
 import '@mysten/dapp-kit/dist/index.css';
-import Wrapper from "@/components/Wrapper";
 
 const ubuntu_mono = Ubuntu_Mono({ weight: "400", variable: "--ubuntu", subsets: ["latin"] });
 

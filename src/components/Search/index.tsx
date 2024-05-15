@@ -1,8 +1,19 @@
 'use client'
 
-import Image from "next/image"
+import Image from "next/image";
+import { useState } from "react";
+import { useRouter } from 'next/navigation';
 
 export default function Search() {
+
+    const router = useRouter();
+
+    const [content, setContent] = useState<string>("");
+
+    function search() {
+        if (content) router.push(`/bid?s=${content}`);
+    }
+
     return (
         <div
             className="
@@ -12,6 +23,11 @@ export default function Search() {
                 className="w-full text-3xl p-3"
                 placeholder="Search .sui name or portfolio..."
                 spellCheck={false}
+                value={content}
+                onChange={e => setContent(e.target.value)}
+                onKeyDown={e => {
+                    if (e.key === "Enter") search();
+                }}
             />
 
             <Image

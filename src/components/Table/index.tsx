@@ -21,8 +21,6 @@ export default function Table({
         }));
     }, [cols])
 
-    console.log(columns)
-
     return (
         <DataTable
             data={data}
