@@ -15,6 +15,7 @@ body {
     background: #000;
     margin: 0;
     padding: 0;
+    font-family: var(--ubuntu);
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -26,7 +27,7 @@ a, button {
     transition: 200ms;
 }
 
-input {
+input, textarea {
     outline-color: var(--light);
     border: 2px solid var(--light);
     color: var(--light);
@@ -35,6 +36,7 @@ input {
     padding: 8px 12px;
     border-radius: 14px;
     transition: 200ms;
+    font-family: var(--ubuntu);
 }
 
 input::placeholder {

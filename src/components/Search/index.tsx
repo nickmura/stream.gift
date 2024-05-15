@@ -9,7 +9,7 @@ export default function Search() {
                 relative flex items-center justify-center w-[60%]"
         >
             <input
-                className="w-full"
+                className="w-full text-3xl p-3"
                 placeholder="Search .sui name or portfolio..."
                 spellCheck={false}
             />
@@ -17,8 +17,8 @@ export default function Search() {
             <Image
                 src="/icons/search.svg"
                 alt="Search Icon"
-                height={25}
-                width={25}
+                height={35}
+                width={35}
                 className="absolute right-3"
             />
         </div>

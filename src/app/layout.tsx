@@ -1,29 +1,19 @@
-'use client'
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Ubuntu_Mono } from "next/font/google";
 
 import Header from "@/components/Header";
 import Modals from "@/components/Modal/Modals";
 
 import "./globals.css";
 import '@mysten/dapp-kit/dist/index.css';
+import Wrapper from "@/components/Wrapper";
 
-const inter = Inter({ subsets: ["latin"] });
+const ubuntu_mono = Ubuntu_Mono({ weight: "400", variable: "--ubuntu", subsets: ["latin"] });
 
-
-import { SuiClientProvider, WalletProvider } from '@mysten/dapp-kit';
-import { getFullnodeUrl } from '@mysten/sui.js/client';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const queryClient = new QueryClient();
-
-
-const networks = {
-	localnet: { url: getFullnodeUrl('localnet') },
-	devnet: { url: getFullnodeUrl('devnet') },
-	testnet: { url: getFullnodeUrl('testnet') },
-	mainnet: { url: getFullnodeUrl('mainnet') },
-};
+export const metadata: Metadata = {
+    title: 'ns-dev',
+    description: 'SUI',
+}
 
 export default function RootLayout({
     children,
@@ -32,16 +22,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body>
-                <QueryClientProvider client={queryClient}>
-                    <SuiClientProvider networks={networks} defaultNetwork="devnet">
-                        <WalletProvider>
-                            <Header />
-                            <Modals />
-                            <main>{children}</main>
-                        </WalletProvider>
-                    </SuiClientProvider>
-                </QueryClientProvider>
+            <body className={ubuntu_mono.className}>
+                <Wrapper>
+                    <Header />
+                    <Modals />
+                    <main>{children}</main>
+                </Wrapper>
             </body>
         </html>
     );

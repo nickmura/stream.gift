@@ -1,0 +1,26 @@
+// react-data-table-component Overwrites
+
+@mixin transparent {
+    background: transparent !important;
+    color: #fff;
+}
+
+.rdt_Table {
+    @include transparent;
+    width: 100%;
+
+    .rdt_TableHeadRow {
+        background: #000 !important;
+        color: #fff;
+        font-size: 24px;
+    }
+
+    .rdt_TableRow {
+        @include transparent;
+        font-size: 16px;
+
+        &:nth-child(odd) {
+            background: #000 !important;
+        }
+    }
+}
