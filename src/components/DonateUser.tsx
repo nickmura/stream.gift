@@ -2,14 +2,14 @@
 import { useState } from "react";
 import { useCurrentAccount } from '@mysten/dapp-kit';
 
-import { EXMAPLE_RECIPIENT_ADDRESS } from "@/lib/config";
+import { EXAMPLE_RECIPIENT_ADDRESS } from "@/lib/config";
 
 import DonateButton from './DonateButton';
 
 
 export default function DonateUser() {
     //Basically the 'streamer' who is getting a donation
-    const recipientAddress = EXMAPLE_RECIPIENT_ADDRESS
+    const recipientAddress = EXAMPLE_RECIPIENT_ADDRESS
     const [handleInput, setHandleInput] = useState<number>();
     const [handleMessage, setHandleMessage] = useState<string>("");
 
