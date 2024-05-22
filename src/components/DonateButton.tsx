@@ -36,7 +36,7 @@ export default function DonateButton({ recipient, amount, message }: {recipient:
         txb.transferObjects([coin], recipient);
 		// TODO: Creating user signature that consists of the message argument encoded
 		
-		
+		// Sponsored tx??? :hmm:
 		
 
         return txb
