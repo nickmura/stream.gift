@@ -1,4 +1,4 @@
-
+'use client'
 import type { Metadata } from "next";
 import { Ubuntu_Mono } from "next/font/google";
 
@@ -11,10 +11,10 @@ import '@mysten/dapp-kit/dist/index.css';
 
 const ubuntu_mono = Ubuntu_Mono({ weight: "400", variable: "--ubuntu", subsets: ["latin"] });
 
-export const metadata: Metadata = {
-    title: 'twitch-sui',
-    description: 'SUI',
-}
+// export const metadata: Metadata = {
+//     title: 'twitch-sui',
+//     description: 'SUI',
+// }
 
 export default function RootLayout({
     children,

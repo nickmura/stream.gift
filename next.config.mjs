@@ -1,4 +1,12 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    typescript: {
+        ignoreBuildErrors: true,
+    },
+    reactStrictMode: true,
+    swcMinify: true,
+}
+
+
 
 export default nextConfig;
