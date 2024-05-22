@@ -1,22 +1,30 @@
 'use client'
 
+import { useEffect, useState } from "react";
 import Donation from "@/components/Donation";
 import { EXAMPLE_RECIPIENT_ADDRESS } from "@/lib/config";
+import { SuiClient, getFullnodeUrl } from "@mysten/sui.js/client";
 
-export default function DonationEventListener() {
+export default  function DonationEventListener() {
   //Should we have the event listener here, and then once it triggers, send the event data
   // to a child component? Which will be inherently visible? Otherwise show nothing...
 
-  setInterval(() => {
-    //TODO: create a JSON RPC call for a specific contract for events...
-    //TODO: or create a websocket or webhook connection for subscribing to events....
-    //TODO: once we have the event or data we need, call function to set state
-  })
+   
+  // naming the function unsubscribe may seem counterintuitive here, but you call it later to unsubscribe from the event
+  
+
+  const [donation, setDonation ] = useState(true)
+
+  useEffect(() => {
+   
+  }, )
+  
+
   let message = 'ello, love your streams bro'
 
   let amount = 1.2
 
-  let sender = 'nicky.sui';
+  let sender = 'nicky.sui'
   const newDonation = true
 
 
@@ -26,7 +34,7 @@ export default function DonationEventListener() {
 
       </div>
     
-      {newDonation ? <>
+      {newDonation && donation ? <>
         <Donation sender={sender} amount={amount} message={message} />
       </> : <>
       

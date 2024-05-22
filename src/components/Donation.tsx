@@ -32,9 +32,9 @@ export default function Donation({sender, amount, message}: {sender: string, amo
 
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between w-full p-24">
-      <div className="w-1/2">
-        <h1 className='text-2xl'>You just received a donation for {amount} SUI from {sender}! </h1>
+    <main className="flex min-h-screen flex-col items-center  w-full ">
+      <div className=" ">
+        <h1 className='text-6xl'>You just received a donation for {amount} SUI from {sender}! </h1>
         <p className='pt-5'>
             {message}
         </p>

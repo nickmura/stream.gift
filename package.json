@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "node ./src/lib/test.mjs"
   },
   "dependencies": {
     "@mysten/dapp-kit": "^0.13.2",
