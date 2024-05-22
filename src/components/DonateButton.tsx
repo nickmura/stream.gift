@@ -35,18 +35,8 @@ export default function DonateButton({ recipient, amount, message }: {recipient:
 
         txb.transferObjects([coin], recipient);
 		// TODO: Creating user signature that consists of the message argument encoded
-
-
-		// const enc = new TextEncoder() // .encode() method default UInt8Array 
-		// const encodedMessage = enc.encode(message)
-		// const intentMessage = messageWithIntent(
-		// 	IntentScope.TransactionData,
-		// 	encodedMessage,
-		// );
-		// txb.transferObjects(intentMessage, recipient);
-
-		//TODO: call event module to signify twitch donation has occured (requires written contract)
-
+		
+		
 		
 
         return txb
