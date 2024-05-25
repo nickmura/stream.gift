@@ -9,7 +9,7 @@ import DonateButton from './DonateButton';
 
 export default function DonateUser() {
     //Basically the 'streamer' who is getting a donation
-    const recipientAddress = EXAMPLE_RECIPIENT_ADDRESS
+    const recipientAddress = '0x7049901babe076fd05d88f93d3504b6025dab5b15b98fdca921f9ca8e3b52bfb'
     const [handleInput, setHandleInput] = useState<number>(0);
     const [handleMessage, setHandleMessage] = useState<string>("");
 

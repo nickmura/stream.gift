@@ -14,6 +14,7 @@ export default function Donation({sender, amount, message}: {sender: string, amo
     const [handleInput, setHandleInput] = useState<number>();
     const [handleMessage, setHandleMessage] = useState<string>("");
 
+    
     const currentAccount = useCurrentAccount()
 
 
@@ -34,7 +35,7 @@ export default function Donation({sender, amount, message}: {sender: string, amo
   return (
     <main className="flex min-h-screen flex-col items-center  w-full ">
       <div className=" ">
-        <h1 className='text-6xl'>You just received a donation for {amount} SUI from {sender}! </h1>
+        <h1 className='text-6xl'>You just received a donation for {amount} SUI from <span className='truncate'>{sender}</span>! </h1>
         <p className='pt-5'>
             {message}
         </p>
