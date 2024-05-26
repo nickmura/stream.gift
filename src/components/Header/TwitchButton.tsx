@@ -103,7 +103,7 @@ export default function TwitchButton() {
 
         // Redirect to the login page
         const params = new URLSearchParams({
-            client_id: (process.env.REACT_APP_OPENID_CLIENT_ID as string),
+            client_id: (process.env.NEXT_PUBLIC_OPENID_CLIENT_ID as string),
             force_verify: 'true',
             lang: 'en',
             login_type: 'login',
@@ -120,6 +120,8 @@ export default function TwitchButton() {
     return (
         <button
             onClick={login_twitch}
+            className="
+                py-2 px-4 ml-2 rounded-[8px] bg-[#6441a5]"
         >
             Login with Twitch
         </button>
