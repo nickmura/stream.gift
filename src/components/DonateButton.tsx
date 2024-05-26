@@ -64,7 +64,7 @@ export default function DonateButton({ recipient, amount, message }: {recipient:
 						<button className='px-3 py-3 rounded-lg bg-white text-black'
 							onClick={() => {
 								signAndExecuteTransactionBlock(
-									{
+									{ //@ts-ignore
 										transactionBlock: callDonationPTB(amount, message),
 									},
 									{

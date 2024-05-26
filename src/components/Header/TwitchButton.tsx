@@ -8,7 +8,7 @@ import { generateNonce, generateRandomness } from '@mysten/zklogin';
 import toast from "react-hot-toast";
 
 const suiClient = new SuiClient({ url: "https://fullnode.devnet.sui.io" });
-const client_id = '6f49pgkynhblysva740lt4ycboxb8x';
+const client_id = process.env.NEXT_PUBLIC_OPENID_CLIENT_ID ?? ''
 
 export default function TwitchButton() {
 
@@ -111,7 +111,7 @@ export default function TwitchButton() {
             force_verify: 'true',
             lang: 'en',
             login_type: 'login',
-            redirect_uri: 'https://test2.stream.gift', // <-- TODO: Change later
+            redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URL ?? 'https://test2.stream.gift', // <-- TODO: Change later
             response_type: 'id_token',
             scope: 'openid',
             nonce: nonce ? nonce : (nonce_ || "")
