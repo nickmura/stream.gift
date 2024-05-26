@@ -1,13 +1,10 @@
 'use client'
 import { useState } from "react";
 import { useCurrentAccount } from '@mysten/dapp-kit';
-
 import { EXAMPLE_RECIPIENT_ADDRESS } from "@/lib/config";
-
 import DonateButton from './DonateButton';
 
-
-export default function DonateUser() {
+export default function DonateUser({address, user}: {address: string, user: string}) {
     //Basically the 'streamer' who is getting a donation
     const recipientAddress = EXAMPLE_RECIPIENT_ADDRESS
     const [handleInput, setHandleInput] = useState<number>(0);
@@ -15,36 +12,33 @@ export default function DonateUser() {
 
     const currentAccount = useCurrentAccount()
 
-
-
     function changeHandle(value: number) {
         setHandleInput(value);
-
     }
-
 
     function changeMessage(value: string) {
         setHandleMessage(value);
-
     }
 
-
-
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between w-full p-24">
-      <div className="w-1/3">
+    <main className="flex min-h-screen flex-col items-center justify-between w-full p-24 max-md:px-0">
+      <div className="w-1/3 max-2xl:w-[66%] max-md:w-full">
         <div className=''>
-            {handleInput ? (<>
+            {handleInput ? (
+                <>
                     <div id='donation-info-amount' className=''>
-                    Donation amount: {handleInput} SUI
+                        Donation amount: {handleInput} SUI
                     </div>
-                </>) : <></>}
+                </> ) : <></>
+            }
 
-            {handleMessage ? (<>
-                <div id='donation-info-amount' className=''>
-                    Dontion message: {handleMessage}
-                </div>
-            </>): <></>}
+            {handleMessage ? (
+                <>
+                    <div id='donation-info-amount' className=''>
+                        Dontion message: {handleMessage}
+                    </div>
+                </> ) : <></>
+            }
         </div>
 
         <div>
@@ -56,7 +50,6 @@ export default function DonateUser() {
                 onInput={(e) => changeHandle(e.currentTarget.value)}              
                 required
                 placeholder="1 SUI"
-                defaultValue={0}
                 className="block w-full pl-8 rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-3 py-2"
             />
             <input
@@ -73,14 +66,16 @@ export default function DonateUser() {
                 
             <div className="flex justify-center mt-2">
                 {currentAccount && handleInput && handleMessage ? (
-				<>
-                    <DonateButton recipient={recipientAddress} amount={handleInput} message={handleMessage}/>
-                </>
-                ) : (<>
-                <div style={{ padding: 20 }}>
-                    <button  disabled className=' px-3 py-3 rounded-lg bg-white text-black opacity-60'>Sign and execute donation tx</button>
-                </div>
-                </>)}
+                    <>
+                        <DonateButton recipient={recipientAddress} amount={handleInput} message={handleMessage}/>
+                    </>
+                ) : (
+                    <>
+                    <div style={{ padding: 20 }}>
+                        <button  disabled className=' px-3 py-3 rounded-lg bg-white text-black opacity-60'>Sign and execute donation tx</button>
+                    </div>
+                    </>
+                )}
             </div>
       </div> 
     </main>

@@ -5,35 +5,38 @@ import { TransactionBlock } from '@mysten/sui.js/transactions';
 
 import { SUI_DECIMALS } from '@mysten/sui.js/utils';
 import { IntentScope, messageWithIntent } from '@mysten/sui.js/cryptography';
-
+import { SuiClient, getFullnodeUrl } from '@mysten/sui.js/client'
 
 type SignedMessageResult = { // should import type SuiSignPersonalMessageOutput instead (line 102 result type)...
 	signature: string,
 	bytes: string
 }
+
+
 export default function DonateButton({ recipient, amount, message }: {recipient: string, amount: number, message: string}) {
-	const { mutate: signTransactionBlock } = useSignAndExecuteTransactionBlock(); // tx
+	const { mutate: signAndExecuteTransactionBlock } = useSignAndExecuteTransactionBlock();
 	const { mutate: signPersonalMessage } = useSignPersonalMessage(); // message
 
 	const [digest, setDigest] = useState('');
-
+	console.log(recipient)
 
 	const [signedMessageResult, setSignedMessageResult] = useState<SignedMessageResult>()
 	const [signature, setSignature] = useState('');
 	const [bytes, setBytes] = useState('');
 	const currentAccount = useCurrentAccount();
+	const client = new SuiClient({ url: getFullnodeUrl('devnet')})
 
-
-    function callDonationPTB(amount:number, message:string) {
+	function callDonationPTB(amount:number, message:string) {
         console.log(amount, message)
-
+		console.log(recipient)
 
         const txb = new TransactionBlock();
 		
-
+		txb.setSender(currentAccount?.address ?? '0x792423f7950d75fa476fd618bc0c647ce1183ceab19059dd00bdf5690e01db78')
         const [coin] = txb.splitCoins(txb.gas, [amount * (10**SUI_DECIMALS)])
 
         txb.transferObjects([coin], recipient);
+		txb.serialize()
 		// TODO: Creating user signature that consists of the message argument encoded
 		
 		// Sponsored tx??? :hmm:
@@ -42,7 +45,14 @@ export default function DonateButton({ recipient, amount, message }: {recipient:
         return txb
     
     }
-    
+    async function callAPI(digest:string) {
+		const streamer_address = '0x7049901babe076fd05d88f93d3504b6025dab5b15b98fdca921f9ca8e3b52bfb'
+		console.log('fetching for ', digest)
+		let res = await fetch(`http://localhost:4000/incoming_donation?digest=${digest}&streamer=${streamer_address}`)
+		if (!res.ok) throw Error('bad')
+		res = await res.json();
+		console.log(res)
+	}
 
 
 	return (
@@ -53,15 +63,16 @@ export default function DonateButton({ recipient, amount, message }: {recipient:
 					<div>
 						<button className='px-3 py-3 rounded-lg bg-white text-black'
 							onClick={() => {
-								signTransactionBlock(
+								signAndExecuteTransactionBlock(
 									{
 										transactionBlock: callDonationPTB(amount, message),
-										chain: 'sui:devnet',
 									},
 									{
-										onSuccess: (result) => {
+										onSuccess: async (result) => {
 											console.log('signed transaction block', result);
+											
 											setDigest(result.digest);
+											await callAPI(result.digest)
 										},
 									},
 								);
@@ -106,10 +117,6 @@ export default function DonateButton({ recipient, amount, message }: {recipient:
 				)}
 
 			</div>
-
-
-
 		</div>
 	);
 }
-

@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import { SuiClient } from "@mysten/sui.js/client";
 import { Ed25519Keypair } from "@mysten/sui.js/keypairs/ed25519";
 import { generateNonce, generateRandomness } from '@mysten/zklogin';
+import toast from "react-hot-toast";
 
 const suiClient = new SuiClient({ url: "https://fullnode.devnet.sui.io" });
+const client_id = '6f49pgkynhblysva740lt4ycboxb8x';
 
 export default function TwitchButton() {
 
@@ -90,6 +92,8 @@ export default function TwitchButton() {
     }, []);
 
     function login_twitch() {
+        if (!ephemeralKeyPair || !maxEpoch || !randomness) toast.error("An error occured");
+
         let nonce_;
         if (!nonce) {
             nonce_ = generateNonce(
@@ -103,11 +107,11 @@ export default function TwitchButton() {
 
         // Redirect to the login page
         const params = new URLSearchParams({
-            client_id: (process.env.NEXT_PUBLIC_OPENID_CLIENT_ID as string),
+            client_id,
             force_verify: 'true',
             lang: 'en',
             login_type: 'login',
-            redirect_uri: window.location.href,
+            redirect_uri: 'https://test2.stream.gift', // <-- TODO: Change later
             response_type: 'id_token',
             scope: 'openid',
             nonce: nonce ? nonce : (nonce_ || "")
@@ -121,7 +125,7 @@ export default function TwitchButton() {
         <button
             onClick={login_twitch}
             className="
-                py-2 px-4 ml-2 rounded-[8px] bg-[#6441a5]"
+                py-2 px-4 ml-4 rounded-[8px] bg-[#6441a5]"
         >
             Login with Twitch
         </button>
