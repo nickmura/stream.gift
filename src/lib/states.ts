@@ -20,3 +20,9 @@ export const useModalStore = create<ModalStore>((set) => ({
     })),
     setLoading: (loading) => set(() => ({ loading }))
 }));
+
+/* Account States */
+// Twitch Account
+interface TwitchStore {
+    
+}
