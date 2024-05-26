@@ -35,15 +35,9 @@ export default  function DonationEventListener() {
       setDonation(true)
     } else {
       setDonation(false)
-
     }
   }, 30000)
 
-  let message = 'ello, love your streams bro'
-
-  let amount = 1.2
-
-  let sender = 'nicky.sui'
   const newDonation = true
 
 

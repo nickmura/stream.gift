@@ -48,7 +48,7 @@ export default function DonateButton({ recipient, amount, message }: {recipient:
     async function callAPI(digest:string) {
 		const streamer_address = '0x7049901babe076fd05d88f93d3504b6025dab5b15b98fdca921f9ca8e3b52bfb'
 		console.log('fetching for ', digest)
-		let res = await fetch(`http://localhost:4000/incoming_donation?digest	=${digest}&streamer=${streamer_address}`)
+		let res = await fetch(`http://localhost:4000/incoming_donation?digest=${digest}&streamer=${streamer_address}`)
 		if (!res.ok) throw Error('bad')
 		res = await res.json();
 		console.log(res)
