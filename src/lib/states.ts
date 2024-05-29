@@ -23,6 +23,16 @@ export const useModalStore = create<ModalStore>((set) => ({
 
 /* Account States */
 // Twitch Account
-interface TwitchStore {
-    
+export interface TwitchUserStore {
+    username: string
 }
+
+interface TwitchStore {
+    user: TwitchUserStore | null;
+    setUser: (user: TwitchUserStore) => void;
+}
+
+export const useAccountStore = create<TwitchStore>((set) => ({
+    user: null,
+    setUser: (user) => set(() => ({ user }))
+}));

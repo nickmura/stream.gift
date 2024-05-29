@@ -4,9 +4,10 @@
     .dropdown {
         position: absolute;
         z-index: 10;
-        background: $light-dark;
-        border: 2px solid $border;
-        width: 100%;
+        background: #1c1c1c;
+        border: 2px solid #91919138;
+        width: 300px;
+        right: 0;
         padding: 8px 0;
         margin-top: 16px;
         border-radius: 8px;
@@ -14,13 +15,13 @@
         .item {
             display: flex;
             align-items: center;
-            color: $light;
+            color: #fff;
             padding: 10px;
             font-size: 14px;
             cursor: pointer;
 
             &:hover {
-                background: $lighter-dark;
+                background: #91919138;
             }
         }
     }
