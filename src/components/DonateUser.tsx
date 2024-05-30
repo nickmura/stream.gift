@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useCurrentAccount } from '@mysten/dapp-kit';
 import { EXAMPLE_RECIPIENT_ADDRESS } from "@/lib/config";
 import DonateButton from './DonateButton';
+import DonateButtonWithMessage from "./DonateButtonWithMessage";
 
 export default function DonateUser({address, user}: {address: string, user: string}) {
     //Basically the 'streamer' who is getting a donation
@@ -67,13 +68,17 @@ export default function DonateUser({address, user}: {address: string, user: stri
             <div className="flex justify-center mt-2">
                 {currentAccount && handleInput && handleMessage ? (
                     <>
+                        <DonateButtonWithMessage recipient={recipientAddress} amount={handleInput} message={handleMessage}/>
+                    </>
+                ) : currentAccount && handleInput && !handleMessage ? (
+                    <>
                         <DonateButton recipient={recipientAddress} amount={handleInput} message={handleMessage}/>
                     </>
                 ) : (
                     <>
-                    <div style={{ padding: 20 }}>
-                        <button  disabled className=' px-3 py-3 rounded-lg bg-white text-black opacity-60'>Sign and execute donation tx</button>
-                    </div>
+                        <div style={{ padding: 20 }}>
+                            <button  disabled className=' px-3 py-3 rounded-lg bg-white text-black opacity-60'>Sign and execute donation tx</button>
+                        </div>
                     </>
                 )}
             </div>
