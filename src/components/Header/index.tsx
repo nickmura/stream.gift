@@ -10,7 +10,7 @@ export default function Header() {
         <Link key={1} className="text-lg" href="/"><span className="text-blue">#</span>home</Link>,
         <Link key={3} className="text-lg" href="/get-started"><span className="text-blue">#</span>get-started</Link>,
         <Link key={2} className="text-lg" href="/dashboard"><span className="text-blue">#</span>dashboard</Link>,
-        <Link key={4} className="text-lg" href="/donate"><span className="text-blue">#</span>donate</Link>,
+        /* <Link key={4} className="text-lg" href="/donate"><span className="text-blue">#</span>donate</Link>, */
     ]
 
     return (

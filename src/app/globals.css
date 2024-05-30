@@ -42,7 +42,7 @@ a {
 button {
   transition: 200ms;
   outline: none;
-  border: none;
+  /* border: none; */
   background: transparent;
   cursor: pointer;
 }
@@ -51,7 +51,7 @@ input,
 textarea {
   transition: 200ms;
   outline: none;
-  border: none;
+  /* border: none; */
   background: transparent;
 }
 
