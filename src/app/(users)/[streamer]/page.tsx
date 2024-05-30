@@ -6,6 +6,8 @@
 
 import StreamerExists from '@/action/streamerExists';
 import GetStreamer from '@/action/streamerExists';
+import DonateButton from '@/components/DonateButton';
+import DonateButtonWithMessage from '@/components/DonateButtonWithMessage';
 import { useCurrentAccount } from '@mysten/dapp-kit';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -94,11 +96,11 @@ export default function Donate({ params }: { params: { streamer: string } }) {
 
                 {currentAccount && amount && message ? (
                     <>
-                        <DonateButtonWithMessage recipient={recipientAddress} amount={handleInput} message={handleMessage}/>
+                        <DonateButtonWithMessage recipient={user.streamer_address} amount={amount} message={message}/>
                     </>
-                ) : currentAccount && handleInput && !handleMessage ? (
+                ) : currentAccount && amount && !message ? (
                     <>
-                        <DonateButton recipient={recipientAddress} amount={handleInput} message={handleMessage}/>
+                        <DonateButton recipient={user.streamer_address} amount={amount} message={message}/>
                     </>
                 ) : (
                     <>
