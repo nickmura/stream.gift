@@ -4,13 +4,9 @@ interface StreamerExists {
     status: Boolean
 }
 
-export default async function StreamerExists(streamer: string): Promise<StreamerExists> {
+export default async function GetStreamer(streamer: string): Promise<StreamerExists> {
     return new Promise(async (resolve, reject) => {
-        fetch(process.env.BACKEND + "/get_streamer", {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ streamer })
-        })
+        fetch(process.env.BACKEND + "/get-streamer" + `?username=${streamer}`)
             .then(res => res.json())
             .then(res => {
                 return resolve({ status: res.status });

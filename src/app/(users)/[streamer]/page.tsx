@@ -5,6 +5,8 @@
 'use client'
 
 import StreamerExists from '@/action/streamerExists';
+import GetStreamer from '@/action/streamerExists';
+import { useCurrentAccount } from '@mysten/dapp-kit';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -12,11 +14,13 @@ import toast from 'react-hot-toast';
 export default function Donate({ params }: { params: { streamer: string } }) {
 
     const streamer: string = params.streamer;
+    const currentAccount = useCurrentAccount()
 
     const [exists, setExists] = useState<Boolean | null>(null);
 
     // Form
-    const [amount, setAmount] = useState<number>(5);
+    const [amount, setAmount] = useState<number>(0);
+    const [ user, setUser] = useState<any>()
     const [message, setMessage] = useState<string>("");
     const [submitting, setSubmitting] = useState<boolean>(false);
 
@@ -24,6 +28,10 @@ export default function Donate({ params }: { params: { streamer: string } }) {
         (async() => {
             const streamerExists: Boolean = (await StreamerExists(streamer)).status;
             setExists(streamerExists);
+
+            const getStreamer = (await GetStreamer(streamer))
+            setUser(getStreamer)
+                
         })()
     }, [])
 
@@ -62,7 +70,7 @@ export default function Donate({ params }: { params: { streamer: string } }) {
                     <input
                         id="donation-amount"
                         type="number"
-                        onChange={e => setAmount(parseInt(e.target.value))}
+                        onChange={e => setAmount(Number(e.target.value))}
                         defaultValue={amount}
                         placeholder="Donation amount"
                         className="flex-1 border-none placeholder:text-gr font-bold text-xl"
@@ -84,16 +92,21 @@ export default function Donate({ params }: { params: { streamer: string } }) {
                         resize-none border-[1px] border-gr rounded-md p-2 text-gr"
                 ></textarea>
 
-                <button
-                    disabled={submitting}
-                    onClick={donate}
-                    className="
-                        w-fit mx-auto bg-blue rounded-md font-bold h-full text-md px-4 py-[6px] flex items-center
-                        disabled:bg-transparent disabled:border-[1px] disabled:border-blue
-                        max-md:w-full max-md:max-w-[768px] max-md:mx-auto max-md:justify-center"
-                    >
-                    { submitting ? 'Submitting' : 'Submit' }
-                </button>
+                {currentAccount && amount && message ? (
+                    <>
+                        <DonateButtonWithMessage recipient={recipientAddress} amount={handleInput} message={handleMessage}/>
+                    </>
+                ) : currentAccount && handleInput && !handleMessage ? (
+                    <>
+                        <DonateButton recipient={recipientAddress} amount={handleInput} message={handleMessage}/>
+                    </>
+                ) : (
+                    <>
+                        <div style={{ padding: 20 }}>
+                            <button  disabled className=' px-3 py-3 rounded-lg bg-white text-black opacity-60'>Sign and execute donation tx</button>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     )

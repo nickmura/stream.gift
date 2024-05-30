@@ -28,31 +28,30 @@ export default function DonateButton({recipient, amount}: {recipient: string, am
 	const client = new SuiClient({ url: getFullnodeUrl('devnet')})
 
 	function callDonationPTB(amount:number) {
-        console.log(amount)
-		console.log(recipient)
+        console.log(amount);
+		console.log(recipient);
 
         let txb = new TransactionBlock();
 		
 		txb.setSender(currentAccount?.address ?? '0x792423f7950d75fa476fd618bc0c647ce1183ceab19059dd00bdf5690e01db78')
-        const [coin] = txb.splitCoins(txb.gas, [amount * (10**SUI_DECIMALS)])
+        const [coin] = txb.splitCoins(txb.gas, [amount * (10**SUI_DECIMALS)]);
 
         txb.transferObjects([coin], recipient)
 		setSerialTx(txb.serialize())
 		// TODO: Creating user signature that consists of the message argument encoded
-		
 		// Sponsored tx??? :hmm:
-		
-
         return txb.serialize()
-    
     }
     async function sendIncomingDonation(digest:string ) {
 		console.log('fetching for ', digest)
-		let res = await fetch(`/api/sendIncomingDonation?digest=${digest}&streamer=${recipient}&sender=${currentAccount?.address}`)
+		let res = await fetch(`/api/sendIncomingDonation?digest=${digest}&streamer=${recipient}
+		&sender=${currentAccount?.address}`)
+
 		if (!res.ok) throw Error('bad')
 		res = await res.json();
 		console.log(res)
 	}
+
 
 
 	return (
