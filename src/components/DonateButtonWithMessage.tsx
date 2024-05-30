@@ -42,14 +42,16 @@ export default function DonateButtonWithMessage({ recipient, amount, message }: 
 		
 		// Sponsored tx??? :hmm:
 		
-
+ 
         return txb.serialize()
     
     }
-    async function callAPI(digest:string) {
+    async function sendIncomingDonation(digest:string, bytes:string) {
+		console.log(bytes)
 		const streamer_address = '0x7049901babe076fd05d88f93d3504b6025dab5b15b98fdca921f9ca8e3b52bfb'
 		console.log('fetching for ', digest)
-		let res = await fetch(`/api/sendIncomingDonation?digest=${digest}&streamer=${streamer_address}`)
+		let res = await fetch(`/api/sendIncomingDonation?digest=${digest}&streamer=${streamer_address}&sender=${currentAccount?.address}
+		&message=${bytes}`)
 		if (!res.ok) throw Error('bad')
 		res = await res.json();
 		console.log(res)
@@ -73,7 +75,7 @@ export default function DonateButtonWithMessage({ recipient, amount, message }: 
 											console.log('signed transaction block', result);
 											
 											setDigest(result.digest);
-											await callAPI(result.digest)
+											await sendIncomingDonation(result.digest, bytes)
 										},
 									},
 								);
@@ -82,6 +84,8 @@ export default function DonateButtonWithMessage({ recipient, amount, message }: 
 							Sign and execute donation tx (& msg)
 						</button>
 					</div>
+					<div>Signature: {signature}</div>
+					<div>Base64 representation of message: {bytes}</div>
 					{digest ? <>
                         <div>digest: {digest}</div>
                     </> : <>
@@ -101,6 +105,7 @@ export default function DonateButtonWithMessage({ recipient, amount, message }: 
 								},
 									{
 										onSuccess: (result) => {
+											console.log('messaged signed, ', result.signature)
 											setSignedMessageResult(result)
 											setSignature(result.signature)
 											setBytes(result.bytes)
@@ -112,8 +117,7 @@ export default function DonateButtonWithMessage({ recipient, amount, message }: 
 						>
 							Sign message
 						</button>
-						<div>Signature: {signature}</div>
-						<div>Base64 representation of message: {bytes}</div>
+
 					</>
 				)}
 

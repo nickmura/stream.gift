@@ -13,7 +13,7 @@ type SignedMessageResult = { // should import type SuiSignPersonalMessageOutput 
 }
 
 
-export default function DonateButton({ recipient, amount}: {recipient: string, amount: number, message: string}) {
+export default function DonateButton({recipient, amount}: {recipient: string, amount: number, message: string}) {
 	const { mutate: signAndExecuteTransactionBlock } = useSignAndExecuteTransaction();
 	const { mutate: signPersonalMessage } = useSignPersonalMessage(); // message
 
@@ -46,10 +46,9 @@ export default function DonateButton({ recipient, amount}: {recipient: string, a
         return txb.serialize()
     
     }
-    async function callAPI(digest:string) {
-		const streamer_address = '0x7049901babe076fd05d88f93d3504b6025dab5b15b98fdca921f9ca8e3b52bfb'
+    async function sendIncomingDonation(digest:string ) {
 		console.log('fetching for ', digest)
-		let res = await fetch(`/api/sendIncomingDonation?digest=${digest}&streamer=${streamer_address}`)
+		let res = await fetch(`/api/sendIncomingDonation?digest=${digest}&streamer=${recipient}&sender=${currentAccount?.address}`)
 		if (!res.ok) throw Error('bad')
 		res = await res.json();
 		console.log(res)
@@ -73,7 +72,7 @@ export default function DonateButton({ recipient, amount}: {recipient: string, a
 											console.log('signed transaction block', result);
 											
 											setDigest(result.digest);
-											await callAPI(result.digest)
+											await sendIncomingDonation(result.digest)
 										},
 									},
 								);
