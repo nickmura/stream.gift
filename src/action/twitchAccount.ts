@@ -12,7 +12,7 @@ export default async function TwitchAccount(token?: string) {
         fetch(process.env.BACKEND + "/check-streamer", {
             method: "GET",
             headers: {
-                "access-token": token  || ""
+                "access-token": token || ""
             }
         })
             .then(res => res.json())

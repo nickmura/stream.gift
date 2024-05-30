@@ -10,7 +10,7 @@ export default function Sidebar() {
                 max-xl:mx-4 sticky top-0"
             >
                 <div className="flex-1 w-[2px] bg-gr"></div>
-                <a href="https://github.com/nickmura/twitch-sui" target="_blank">
+                <a href="https://github.com/nickmura/stream.gift" target="_blank">
                     <Image
                         src="/github.svg"
                         alt="Github Logo"

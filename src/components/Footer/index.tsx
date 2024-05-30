@@ -26,7 +26,7 @@ export default function Footer() {
             <div>
                 <h2 className="font-medium text-2xl mb-1">Media</h2>
                 <div className="flex items-center justify-center gap-6">
-                    <a href="https://github.com/nickmura/twitch-sui" target="_blank">
+                    <a href="https://github.com/nickmura/stream.gift" target="_blank">
                         <Image
                             src="/github.svg"
                             alt="Github Logo"

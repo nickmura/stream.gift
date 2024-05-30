@@ -2,28 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: #fff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: #fff;
+  transition: 200ms;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button {
+  transition: 200ms;
+  outline: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input,
+textarea {
+  transition: 200ms;
+  outline: none;
+  border: none;
+  background: transparent;
+}
+
+main {
+  min-height: 100vh;
+}
+
+::selection {
+  background: white;
+  color: #000;
+}
+
+.vertical-center {
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 @layer utilities {
