@@ -13,12 +13,12 @@ type SignedMessageResult = { // should import type SuiSignPersonalMessageOutput 
 }
 
 
-export default function DonateButton({ recipient, amount}: {recipient: string, amount: number, message: string}) {
+export default function DonateButtonWithMessage({ recipient, amount, message }: {recipient: string, amount: number, message: string}) {
 	const { mutate: signAndExecuteTransactionBlock } = useSignAndExecuteTransaction();
 	const { mutate: signPersonalMessage } = useSignPersonalMessage(); // message
 
 	const [digest, setDigest] = useState('');
-	console.log(recipient, 'DonateButton')
+	console.log(recipient, 'DonateButtonWithMessage')
 
 	const [signedMessageResult, setSignedMessageResult] = useState<SignedMessageResult>()
 	const [signature, setSignature] = useState('');
@@ -27,8 +27,8 @@ export default function DonateButton({ recipient, amount}: {recipient: string, a
 	const currentAccount = useCurrentAccount();
 	const client = new SuiClient({ url: getFullnodeUrl('devnet')})
 
-	function callDonationPTB(amount:number) {
-        console.log(amount)
+	function callDonationPTB(amount:number, message:string, signature:string, bytes:string) {
+        console.log(amount, message)
 		console.log(recipient)
 
         let txb = new TransactionBlock();
@@ -59,14 +59,14 @@ export default function DonateButton({ recipient, amount}: {recipient: string, a
 	return (
 		<div style={{ padding: 20 }}>
 
-			{currentAccount && (
+			{currentAccount && signedMessageResult && signature && bytes &&(
 				<>
 					<div>
 						<button className='px-3 py-3 rounded-lg bg-white text-black'
 							onClick={() => {
 								signAndExecuteTransactionBlock(
 									{
-										transaction: callDonationPTB(amount),
+										transaction: callDonationPTB(amount, message, signature, bytes),
 									},
 									{
 										onSuccess: async (result) => {
@@ -79,7 +79,7 @@ export default function DonateButton({ recipient, amount}: {recipient: string, a
 								);
 							}}
 						>
-							Sign and execute donation tx
+							Sign and execute donation tx (& msg)
 						</button>
 					</div>
 					{digest ? <>
@@ -91,7 +91,31 @@ export default function DonateButton({ recipient, amount}: {recipient: string, a
 				</>
 			)}
 			<div className='mt-5'>
-				
+				{currentAccount && message && !signedMessageResult && !signature && !bytes && (
+					<>
+					<button className='px-3 py-3 rounded-lg bg-white text-black'
+						onClick={() => {
+							signPersonalMessage(
+								{
+									message: new TextEncoder().encode(message),
+								},
+									{
+										onSuccess: (result) => {
+											setSignedMessageResult(result)
+											setSignature(result.signature)
+											setBytes(result.bytes)
+										
+										}
+									},
+								);
+							}}
+						>
+							Sign message
+						</button>
+						<div>Signature: {signature}</div>
+						<div>Base64 representation of message: {bytes}</div>
+					</>
+				)}
 
 			</div>
 
