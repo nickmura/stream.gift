@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react';
-import { useCurrentAccount, useSignAndExecuteTransactionBlock, useSignPersonalMessage } from '@mysten/dapp-kit';
+import { useCurrentAccount, useSignAndExecuteTransaction, useSignPersonalMessage } from '@mysten/dapp-kit';
 import { TransactionBlock } from '@mysten/sui.js/transactions';
 
 import { SUI_DECIMALS } from '@mysten/sui.js/utils';
@@ -14,7 +14,7 @@ type SignedMessageResult = { // should import type SuiSignPersonalMessageOutput 
 
 
 export default function DonateButton({ recipient, amount, message }: {recipient: string, amount: number, message: string}) {
-	const { mutate: signAndExecuteTransactionBlock } = useSignAndExecuteTransactionBlock();
+	const { mutate: signAndExecuteTransactionBlock } = useSignAndExecuteTransaction();
 	const { mutate: signPersonalMessage } = useSignPersonalMessage(); // message
 
 	const [digest, setDigest] = useState('');
@@ -22,6 +22,7 @@ export default function DonateButton({ recipient, amount, message }: {recipient:
 
 	const [signedMessageResult, setSignedMessageResult] = useState<SignedMessageResult>()
 	const [signature, setSignature] = useState('');
+	const [serialTx, setSerialTx] = useState('');
 	const [bytes, setBytes] = useState('');
 	const currentAccount = useCurrentAccount();
 	const client = new SuiClient({ url: getFullnodeUrl('devnet')})
@@ -30,25 +31,25 @@ export default function DonateButton({ recipient, amount, message }: {recipient:
         console.log(amount, message)
 		console.log(recipient)
 
-        const txb = new TransactionBlock();
+        let txb = new TransactionBlock();
 		
 		txb.setSender(currentAccount?.address ?? '0x792423f7950d75fa476fd618bc0c647ce1183ceab19059dd00bdf5690e01db78')
         const [coin] = txb.splitCoins(txb.gas, [amount * (10**SUI_DECIMALS)])
 
-        txb.transferObjects([coin], recipient);
-		txb.serialize()
+        txb.transferObjects([coin], recipient)
+		setSerialTx(txb.serialize())
 		// TODO: Creating user signature that consists of the message argument encoded
 		
 		// Sponsored tx??? :hmm:
 		
 
-        return txb
+        return txb.serialize()
     
     }
     async function callAPI(digest:string) {
 		const streamer_address = '0x7049901babe076fd05d88f93d3504b6025dab5b15b98fdca921f9ca8e3b52bfb'
 		console.log('fetching for ', digest)
-		let res = await fetch(`http://localhost:4000/incoming_donation?digest=${digest}&streamer=${streamer_address}`)
+		let res = await fetch(`/api/sendIncomingDonation?digest=${digest}&streamer=${streamer_address}`)
 		if (!res.ok) throw Error('bad')
 		res = await res.json();
 		console.log(res)
@@ -65,7 +66,7 @@ export default function DonateButton({ recipient, amount, message }: {recipient:
 							onClick={() => {
 								signAndExecuteTransactionBlock(
 									{
-										transactionBlock: callDonationPTB(amount, message),
+										transaction: callDonationPTB(amount, message),
 									},
 									{
 										onSuccess: async (result) => {
