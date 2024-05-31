@@ -1,36 +1,36 @@
-# twitch sui
+# [stream.gift](https://stream.gift)
 
-## Getting Started
+Receive & send Twitch & streaming donations via crypto / SUI. Developed by @nickmura & @oynozan
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Instructions
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Create a [Sui Wallet](https://chromewebstore.google.com/detail/sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil) via zkLogin Twitch, hardware wallet, etc
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Login to [stream.gift](https://stream.gift) via Twitch
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Connect your wallet on the dashboard, and sign a message to verify & instaniate your address to your account.
 
-## Learn More
+- In OBS, click the (+) on "Sources", and add a 'Browser' source
 
-To learn more about Next.js, take a look at the following resources:
+- Copy and paste the event listener URL that appears on the dashboard after verifying your address into the URL of the Browser source.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Customize, and done. This will display & listen for incoming SUI donations.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Troubleshooting
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+// TODO
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Dependancies 
+
+
+## Links
+
+[.stream.gift (express backend)](https://github.com/nickmura/.stream.gift)
+
+
+
+
+

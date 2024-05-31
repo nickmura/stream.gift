@@ -20,7 +20,8 @@ export default function Footer() {
                     </div>
                     <p className="text-gr text-lg">contact@stream.gift</p>
                 </div>
-                <p className="text-white text-lg max-md:text-center">Donate to your favorite Twitch streamer on SUI network.</p>
+                <p className="text-white text-lg max-md:text-center max-w-[70%]">Support streamers via cryptocurrency. Submitted to the 
+                &nbsp;<a className='underline  transition' href='https://sui.io/overflow' target="_blank"> Sui Overflow Hackathon 2024</a></p>
             </div>
 
             <div>
@@ -39,7 +40,7 @@ export default function Footer() {
         </footer>
 
         <div className="my-12">
-            <p className="text-center text-gr text-lg">&copy; 2024 - Made by Nick Mura Team</p>
+            <p className="text-center text-gr text-lg">&copy; 2024 - Made by Receive.me Team</p>
         </div>
 
         {/* Abstract vectors */}

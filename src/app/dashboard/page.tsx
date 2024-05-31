@@ -62,11 +62,19 @@ export default function Dashboard() {
         <p className="text-gr font-bold text-2xl max-w-[70%] max-md:max-w-full max-md:text-center">
           Stream Connection Instructions 
         </p>
-        {!verified ? 
+        {currentUser ? 
         <>
+        {currentUser.signature ? <>
+          <p className="text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center">
+          Need to change your address? You can link another wallet and sign & verify a message with another address
+          Click "Stream Connection Instructions" for help
+        </p>
+        </> : <>
         <p className="text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center">
           In order to receive donations, you must sign and verify your address. Click "Sign and verify address" to continue.
         </p>
+        </>}
+
         </> : <>
         
         </>}

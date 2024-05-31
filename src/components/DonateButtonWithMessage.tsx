@@ -64,7 +64,7 @@ export default function DonateButtonWithMessage({ recipient, amount, message }: 
 			{currentAccount && signedMessageResult && signature && bytes &&(
 				<>
 					<div>
-						<button className='px-3 py-3 rounded-lg bg-white text-black'
+						<button id="wallet-connect-button-3" className='px-3 py-3 rounded-lg  text-white'
 							onClick={() => {
 								signAndExecuteTransactionBlock(
 									{
@@ -97,7 +97,7 @@ export default function DonateButtonWithMessage({ recipient, amount, message }: 
 			<div className='mt-5'>
 				{currentAccount && message && !signedMessageResult && !signature && !bytes && (
 					<>
-					<button className='px-3 py-3 rounded-lg bg-white text-black'
+					<button id='wallet-connect-button-3' className='px-3 py-3 rounded-lg  text-white'
 						onClick={() => {
 							signPersonalMessage(
 								{

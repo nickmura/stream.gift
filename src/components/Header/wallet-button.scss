@@ -35,3 +35,16 @@ button[data-dapp-kit] {
         font-weight: 400;
     }
 }
+
+#wallet-connect-button-3 {
+    padding: 5px !important;
+    border-radius: 8px;
+    background: #4DA2FF !important;
+    width: 100%;
+    
+    > div { 
+        color: #FFF !important;
+        font-size: 16px;
+        font-weight: 400;
+    }
+}
