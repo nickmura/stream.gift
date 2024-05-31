@@ -6,6 +6,7 @@ import { SuiClient, getFullnodeUrl } from "@mysten/sui.js/client";
 
 import Donation from "@/components/Donation";
 import CheckDonations from "@/action/checkDonations";
+import { b64DecodeUnicode, truncateWalletAddress } from "@/lib/helper";
 
 export default function DonationEventListener() {
   // Should we have the event listener here, and then once it triggers, send the event data
@@ -22,10 +23,10 @@ export default function DonationEventListener() {
       const interval = setInterval(async () => {
         try {
           const res = await CheckDonations(username);
-  
-          if (res?.status !== false && res?.sender) {
-            setDonation(res);
-            console.log(res);
+          if (res) console.log(res);
+
+          if (res?.status !== false && res?.[0]?.sender) {
+            setDonation(res[0]);
           } else {
             setDonation(false);
           }
@@ -41,9 +42,9 @@ export default function DonationEventListener() {
         <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex"></div>
         {donation && (
           <Donation
-            sender={donation.sender}
+            sender={donation.sender_suins ?? truncateWalletAddress(donation.sender)}
             amount={donation.amount}
-            message={donation.message}
+            message={b64DecodeUnicode(donation.message)}
           />
         )}
     </main>
