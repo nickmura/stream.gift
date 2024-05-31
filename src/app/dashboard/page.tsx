@@ -41,13 +41,14 @@ export default function Dashboard() {
       })
   }
 
-
+  const [eventURL, setEventURL] = useState<string>()
   useEffect(() => {
     (async() => {
 
         const getStreamer = (await GetStreamer(String(user?.username)))
         console.log(getStreamer)
         setCurrentUser(getStreamer)
+        setEventURL(`https://stream.gift/${user?.username}/donationEvents`)
             
     })()
 }, [user])
@@ -59,16 +60,18 @@ export default function Dashboard() {
         <h1 className="font-bold text-5xl max-w-[70%] mb-6 max-md:max-w-full max-md:text-center">
           {user.username}&#39;s dashboard
         </h1>
-        <p className="text-gr font-bold text-2xl max-w-[70%] max-md:max-w-full max-md:text-center">
+        <button className="text-gr font-bold text-2xl max-w-[70%] max-md:max-w-full max-md:text-center">
           Stream Connection Instructions 
-        </p>
+        </button>
         {currentUser ? 
         <>
         {currentUser.signature ? <>
           <p className="text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center">
-          Need to change your address? You can link another wallet and sign & verify a message with another address
-          Click "Stream Connection Instructions" for help
-        </p>
+          Need to change your address? You can link another wallet and sign & verify a message with another address.
+          Click "Stream Connection Instructions" for help.
+          </p>
+          
+          <p className='text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center'>Donation event listener: {eventURL}</p>
         </> : <>
         <p className="text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center">
           In order to receive donations, you must sign and verify your address. Click "Sign and verify address" to continue.
@@ -81,7 +84,7 @@ export default function Dashboard() {
         {/* Form */}
         <label htmlFor="handle-input" className="text-md text-gr block max-md:text-center">SUI Identifier
         {currentUser?.signature ? <>
-          <span className='text-green-500'> (Verified)</span><span></span>
+          <span className='text-green-500'> (Verified)</span>
         </> : <>
         <span className='text-yellow-500'> (Unverified)</span>
         </>} 

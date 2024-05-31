@@ -11,12 +11,25 @@ export default  function DonationEventListener() {
 
    
   // naming the function unsubscribe may seem counterintuitive here, but you call it later to unsubscribe from the event
-  
 
   const [donation, setDonation ] = useState(true)
 
   useEffect(() => {
-   
+     //TODO: change endpoint to accept the username via route
+  setInterval(async () => {
+    let address = ''
+    let res = await fetch(`http://localhost:4000/check_new_donations?streamer_address=${address}`)
+    if (!res.ok) throw new Error('bad')
+    res = await res.json(); // @ts-ignore  
+    if (res.length) { // @ts-ignore 
+      setParams(res[0])
+      console.log(res) 
+      setDonation(true)
+    } else {
+      setDonation(false)
+    }
+  }, 30000)
+
   }, )
   
 
