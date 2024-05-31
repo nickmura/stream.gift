@@ -35,11 +35,8 @@ export default function Donate({ params }: { params: { streamer: string } }) {
         (async() => {
             const streamerExists: Boolean = (await StreamerExists(streamer)).status;
             setExists(streamerExists);
-
             const getStreamer = (await GetStreamer(streamer))
-            console.log(getStreamer)
             setUser(getStreamer)
-                
         })()
     }, [])
 

@@ -46,7 +46,6 @@ export default function Dashboard() {
     (async() => {
 
         const getStreamer = (await GetStreamer(String(user?.username)))
-        console.log(getStreamer)
         setCurrentUser(getStreamer)
         setEventURL(`https://stream.gift/${user?.username}/donationEvents`)
             

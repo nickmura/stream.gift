@@ -7,11 +7,14 @@ import { SuiClient, getFullnodeUrl } from "@mysten/sui.js/client";
 import Donation from "@/components/Donation";
 import CheckDonations from "@/action/checkDonations";
 import { b64DecodeUnicode, truncateWalletAddress } from "@/lib/helper";
+import { useAccountStore } from "@/lib/states";
+import { useAudio } from "@/hooks/useAudio";
+import GetStreamer from "@/action/getStreamer";
 
 export default function DonationEventListener() {
-  // Should we have the event listener here, and then once it triggers, send the event data
-  // to a child component? Which will be inherently visible? Otherwise show nothing...
-  // naming the function unsubscribe may seem counterintuitive here, but you call it later to unsubscribe from the event
+
+  const [user, setUser] = useState<any>(null);
+  const [playing, toggleAudio] = useAudio("/notification.wav");
 
   const pathname = usePathname();
   const username = pathname.split("/")[1];
@@ -27,13 +30,28 @@ export default function DonationEventListener() {
 
           if (res?.status !== false && res?.[0]?.sender) {
             setDonation(res[0]);
+
+            if (user?.notificationSound) {
+              // Play donation sound
+              (toggleAudio as (() => void))();
+            }
           } else {
             setDonation(false);
           }
         } catch(e) {}
-      }, 30000);
+      }, 30_000);
   
       return () => clearInterval(interval);
+    }
+  }, [username, user]);
+
+  useEffect(() => {
+    if (username) {
+      (async() => {
+        // Get public streamer data
+        const user_raw = (await GetStreamer(username)).user;
+        if (user_raw?.status !== false) setUser(user_raw);
+      })()
     }
   }, [username]);
 
