@@ -2,7 +2,7 @@
 
 import { ConnectButton } from "@mysten/dapp-kit";
 import Image from "next/image";
-import '../../components/Header/wallet-button.scss';
+import '../../../components/Header/wallet-button.scss';
 import React from "react";
 
 export default function GetStarted() {
