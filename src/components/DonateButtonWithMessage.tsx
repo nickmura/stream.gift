@@ -33,7 +33,7 @@ export default function DonateButtonWithMessage({ recipient, amount, message }: 
 
         let txb = new TransactionBlock();
 		
-		txb.setSender(currentAccount?.address ?? '0x792423f7950d75fa476fd618bc0c647ce1183ceab19059dd00bdf5690e01db78')
+		txb.setSender(currentAccount?.address ?? '')
         const [coin] = txb.splitCoins(txb.gas, [amount * (10**SUI_DECIMALS)])
 
         txb.transferObjects([coin], recipient)
@@ -48,9 +48,9 @@ export default function DonateButtonWithMessage({ recipient, amount, message }: 
     }
     async function sendIncomingDonation(digest:string, bytes:string) {
 		console.log(bytes)
-		const streamer_address = '0x7049901babe076fd05d88f93d3504b6025dab5b15b98fdca921f9ca8e3b52bfb'
+
 		console.log('fetching for ', digest)
-		let res = await fetch(`/api/sendIncomingDonation?digest=${digest}&streamer=${streamer_address}&sender=${currentAccount?.address}
+		let res = await fetch(`/api/sendIncomingDonation?digest=${digest}&streamer=${recipient}&sender=${currentAccount?.address}
 		&message=${bytes}`)
 		if (!res.ok) throw Error('bad')
 		res = await res.json();
