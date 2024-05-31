@@ -6,7 +6,7 @@ interface StreamerExists {
 
 export default async function StreamerExists(streamer: string): Promise<StreamerExists> {
     return new Promise(async (resolve, reject) => {
-        fetch(process.env.BACKEND + "/get_streamer", {
+        fetch(process.env.BACKEND + "/streamer-exists", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ streamer })

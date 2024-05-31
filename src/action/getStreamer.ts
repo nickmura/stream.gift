@@ -9,7 +9,7 @@ export default async function GetStreamer(streamer: string): Promise<StreamerExi
         fetch(process.env.BACKEND + "/get-streamer" + `?username=${streamer}`)
             .then(res => res.json())
             .then(res => {
-                return resolve({ status: res.status });
+                return resolve(res);
             })
             .catch(e => {
                 return reject({ status: false });

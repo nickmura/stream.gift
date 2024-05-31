@@ -5,7 +5,7 @@
 'use client'
 
 import StreamerExists from '@/action/streamerExists';
-import GetStreamer from '@/action/streamerExists';
+import GetStreamer from '@/action/getStreamer';
 import DonateButton from '@/components/DonateButton';
 import DonateButtonWithMessage from '@/components/DonateButtonWithMessage';
 import { useCurrentAccount } from '@mysten/dapp-kit';
@@ -32,6 +32,7 @@ export default function Donate({ params }: { params: { streamer: string } }) {
             setExists(streamerExists);
 
             const getStreamer = (await GetStreamer(streamer))
+            console.log(getStreamer)
             setUser(getStreamer)
                 
         })()
