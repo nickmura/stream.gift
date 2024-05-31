@@ -59,8 +59,7 @@ export default function DonateButtonWithMessage({ recipient, amount, message }: 
 
 
 	return (
-		<div style={{ padding: 20 }}>
-
+		<div>
 			{currentAccount && signedMessageResult && signature && bytes &&(
 				<>
 					<div>

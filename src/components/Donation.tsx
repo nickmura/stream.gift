@@ -29,19 +29,13 @@ export default function Donation({sender, amount, message}: {sender: string, amo
 
     }
 
-
-
   return (
-    <main className="flex min-h-screen flex-col items-center  w-full ">
-      <div className=" ">
-        <h1 className='text-6xl'>You just received a donation for {amount} SUI from {sender}! </h1>
-        <p className='pt-5'>
+    <main className="flex min-h-screen flex-col items-center w-full ">
+      <div className="bg-[#1c1c1c20] border-[1px] border-gr rounded-lg p-4">
+        <h1 className='text-3xl'>You just received a donation for {amount} SUI from {sender}! </h1>
+        <p className='pt-5 text-xl text-center'>
             {message}
         </p>
-
-
-
-
       </div> 
     </main>
   );

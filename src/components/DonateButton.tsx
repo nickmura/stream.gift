@@ -55,8 +55,7 @@ export default function DonateButton({recipient, amount}: {recipient: string, am
 
 
 	return (
-		<div style={{ padding: 20 }}>
-
+		<div>
 			{currentAccount && (
 				<>
 					<div>

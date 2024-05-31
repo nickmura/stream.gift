@@ -1,7 +1,7 @@
 @mixin glass {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5.8px);
-    -webkit-backdrop-filter: blur(5.8px);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 #modal {
@@ -18,13 +18,15 @@
     @include glass;
 
     .modal-content {
-        background: #94949462;
-        width: fit-content;
-        height: fit-content;
+        background: #00000062;
+        width: 100%;
+        height: 100%;
         border-radius: 8px;
         box-shadow: 0 0 10px 0 #11111175;
-        padding: 30px;
-        max-width: 70vw;
+        padding: 24px;
+        max-width: 60vw;
+        max-height: 60vh;
+        border: 1px solid #ABB2BF;
         @include glass;
 
         @media only screen and (max-width: 1650px) { max-width: 80vw; }

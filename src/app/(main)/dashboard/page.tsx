@@ -65,61 +65,38 @@ export default function Dashboard() {
         </button>
         {currentUser ? 
         <>
-        {currentUser.signature ? <>
-          <p className="text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center">
-          Need to change your address? You can link another wallet and sign & verify a message with another address.
-          Click "Stream Connection Instructions" for help.
-          </p>
-          
-          <p className='text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center'>Donation event listener: {eventURL}</p>
+          {currentUser.signature ? <>
+            <p className="text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center">
+            Need to change your address? You can link another wallet and sign & verify a message with another address.
+            Click &quot;Stream Connection Instructions&quot; for help.
+            </p>
+            
+            <p className='text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center'>Donation event listener: {eventURL}</p>
+          </> : <>
+            <p className="text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center">
+              In order to receive donations, you must sign and verify your address. Click &quot;Sign and verify address&quot; to continue.
+            </p>
+          </>}
         </> : <>
-        <p className="text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center">
-          In order to receive donations, you must sign and verify your address. Click "Sign and verify address" to continue.
-        </p>
-        </>}
-
-        </> : <>
-        
+            
         </>}
         {/* Form */}
         <label htmlFor="handle-input" className="text-md text-gr block max-md:text-center">SUI Identifier
-        {currentUser?.signature ? <>
-          <span className='text-green-500'> (Verified)</span>
-        </> : <>
-        <span className='text-yellow-500'> (Unverified)</span>
-        </>} 
-</label>
+          {currentUser?.signature ? <>
+            <span className='text-green-500'> (Verified)</span>
+          </> : <>
+            <span className='text-yellow-500'> (Unverified)</span>
+          </>} 
+        </label>
         <div className="
-          max-w-[768px] mb-7 h-12 border-[1px] border-gr rounded-md p-2 flex items-center
+          max-w-[768px] mb-7 h-12 border-[1px] border-gr rounded-md py-2 flex items-center
           max-md:mx-auto"
         >
-          {currentAccount && currentUser ? 
-          <>
+          {currentAccount && currentUser ?
             <VerifySignAddress streamer={user.username} address={currentAccount.address} _signature={currentUser?.signature}/>
-          </> 
-          
-          :<>
-           <button></button>
-          </>}
-          {/* <input
-            id="handle-input"
-            readOnly={true}
-            onChange={e => setHandle(e.target.value)}
-            defaultValue={handle}
-            placeholder="Your SUI handler"
-            className="flex-1 border-none placeholder:text-gr font-bold text-xl"
-          /> */}
-          {/*
-          <button
-            disabled={submitting}
-            onClick={saveHandle}
-            className="
-              bg-blue rounded-md font-bold h-full text-md px-4 py-[6px] pt-1
-              disabled:bg-transparent disabled:border-[1px] disabled:border-blue"
-          >
-            { submitting ? 'Saving' : 'Save' }
-          </button>
-          */}
+          :(
+            <button></button>
+          )}
         </div>
 
         <label className="text-md text-gr block max-md:text-center">Settings</label>
@@ -138,19 +115,6 @@ export default function Dashboard() {
             />
             <label className="text-gr font-bold text-xl">Play a notification sound when you get a donation</label>
           </div>
-          {/*
-          <div className="flex items-center gap-2">
-            <Checkbox
-              checked={user.preferences?.textToSpeech}
-              onChange={
-                checked => {
-                  setUser({ ...user, textToSpeech: checked })
-                }
-              }
-            />
-            <label className="text-gr font-bold text-xl">TTS (text-to-speech) messages when donation</label>
-          </div>
-          */}
         </div>
 
         <button

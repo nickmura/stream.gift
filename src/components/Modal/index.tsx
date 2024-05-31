@@ -33,7 +33,7 @@ export default function Modal({
                         height={100}
                     />
                 ) : (
-                    <div>{children}</div>
+                    <>{children}</>
                 )}
             </div>
         </div>
