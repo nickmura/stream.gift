@@ -108,7 +108,7 @@ export default function Donate({ params }: { params: { streamer: string } }) {
                                 message={message}
                             />
                         </>
-                    ) : currentAccount && amount && !message ? (
+                    ) : currentAccount && amount && !message && user ? (
                         <> {/* The value that this returns should be global, so we can return a tx link */}
                             <DonateButton recipient={user.streamer_address} amount={amount} message={message}/>
                         </>
