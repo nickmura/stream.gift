@@ -24,6 +24,9 @@ export default function DonateButtonWithMessage({ recipient, amount, message }: 
 	const [signature, setSignature] = useState('');
 	const [serialTx, setSerialTx] = useState('');
 	const [bytes, setBytes] = useState('');
+
+	const [dropdown, setDropdown] = useState(false);
+
 	const currentAccount = useCurrentAccount();
 	const client = new SuiClient({ url: getFullnodeUrl('devnet')})
 
@@ -83,13 +86,25 @@ export default function DonateButtonWithMessage({ recipient, amount, message }: 
 							Sign and execute donation tx (& msg)
 						</button>
 					</div>
-					<div>Signature: {signature}</div>
-					<div>Base64 representation of message: {bytes}</div>
-					{digest ? <>
-                        <div>digest: {digest}</div>
-                    </> : <>
-                    
-                    </>}
+
+					<div className="mt-10 border-[1px] border-gr rounded-lg">
+						<div
+							className='p-2 flex items-center justify-between cursor-pointer hover:bg-[#ffffff10]'
+							onClick={() => setDropdown(!dropdown)}
+						>
+							<span className='text-lg font-semibold'>Signature Details</span>
+							<div className="h-6 w-6 flex items-center justify-center rounded-full border-[1px] border-gr text-gr transition-all hover:bg-gr cursor-pointer">
+								<span className="font-semibold">{dropdown ? "-" : "+"}</span>
+							</div>
+						</div>
+						{ dropdown && (
+							<div className="p-2 flex flex-col gap-2">
+								<div className="break-words overflow-hidden">Signature: <span className="text-gray-400">{signature}</span></div>
+								<div className="break-words overflow-hidden">Base64 representation of message: <span className="text-gray-400">{bytes}</span></div>
+								{ digest && <div className="break-words overflow-hidden">digest: <span className="text-gray-400">{digest}</span></div> }
+							</div>
+						)}
+					</div>
 
 				</>
 			)}

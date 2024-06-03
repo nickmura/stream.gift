@@ -7,7 +7,6 @@ export default function Checkbox({
     checked: Boolean,
     onChange: (checked: Boolean) => void
 }) {
-    console.log(checked);
     return (
         <>
         { checked ? (

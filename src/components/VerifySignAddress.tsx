@@ -97,8 +97,9 @@ export default function VerifySignAddress({ streamer, address, _signature }: {st
                                         <div
                                             className="h-full flex flex-col"
                                         >
+                                            <p className="font-bold text-xl mb-1">To verify your address, click the sign message below. This doesn&#39;t cost any GAS/MIST, and is done locally.</p>
                                             <div>
-                                                <label className="text-md text-gr mb-1 block max-md:text-center">Donation Address</label>
+                                                <label className="font-bold text-xl text-gr mb-1 block max-md:text-center">SUI Identifier <a href="https://suins.io/" target="_blank">(Buy a SUINS here)</a></label>
                                                 <div className="
                                                     max-w-[768px] h-12 border-[1px] border-gr rounded-md py-2 flex items-center
                                                     max-md:mx-auto"
@@ -111,13 +112,13 @@ export default function VerifySignAddress({ streamer, address, _signature }: {st
                                             </div>
                                             <div className="flex-1 flex items-end justify-end gap-2">
                                                 <button
-                                                    className='px-3 py-2 rounded-lg border-[#4da2ff] border text-white'
+                                                    className='px-3 py-2 rounded-lg border-[#4da2ff] border text-white font-bold text-md'
                                                     onClick={() => setModal("", null)}
                                                 >
                                                     Cancel
                                                 </button>
                                                 <button
-                                                    className='px-3 py-2 rounded-lg bg-[#4da2ff] text-white'
+                                                    className='px-3 py-2 rounded-lg bg-[#4da2ff] text-white font-bold text-md'
                                                 >
                                                     Save
                                                 </button>

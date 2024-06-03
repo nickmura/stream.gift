@@ -59,6 +59,19 @@ main {
   min-height: 100vh;
 }
 
+table {
+  color: #ABB2BF;
+}
+
+table th {
+  text-align: start;
+  padding-right: 30px;
+}
+
+table tr td {
+  padding-right: 30px;
+}
+
 ::selection {
   background: white;
   color: #000;

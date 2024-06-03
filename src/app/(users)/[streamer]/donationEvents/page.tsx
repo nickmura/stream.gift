@@ -31,7 +31,7 @@ export default function DonationEventListener() {
           if (res?.status !== false && res?.[0]?.sender) {
             setDonation(res[0]);
 
-            if (user?.notificationSound) {
+            if (user?.notificationsound) {
               // Play donation sound
               (toggleAudio as (() => void))();
             }

@@ -153,7 +153,7 @@ export default function TwitchButton() {
                 className="wallet-connect-button"
                 style={{ color: "#6441a5" }}
             >
-                {user.username}
+                {user.preferred_username}
             </p>
         ) : (
             <button

@@ -29,7 +29,6 @@ export default function Donate({ params }: { params: { streamer: string } }) {
     const [amount, setAmount] = useState<number>(0);
     const [user, setUser] = useState<any>(null)
     const [message, setMessage] = useState<string>("");
-    const [submitting, setSubmitting] = useState<boolean>(false);
 
     useEffect(() => {
         (async() => {
@@ -39,10 +38,6 @@ export default function Donate({ params }: { params: { streamer: string } }) {
             setUser(getStreamer)
         })()
     }, [])
-
-    function donate() {
-        toast.success("Donation is successful");
-    }
 
     if (exists === null) return <CustomWrapper><></></CustomWrapper>
     

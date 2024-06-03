@@ -24,12 +24,14 @@ export const useModalStore = create<ModalStore>((set) => ({
 /* Account States */
 // Twitch Account
 export interface TwitchUserStore {
-    username: string,
-    handle: string, // SUI handle
+    suins?: string,
+    signature?: string,
+    streamer_address?: string,
+    preferred_username: string,
 
     // Preferences -->
     textToSpeech: Boolean,
-    notificationSound: Boolean
+    notificationsound: Boolean
 }
 
 interface TwitchStore {

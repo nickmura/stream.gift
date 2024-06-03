@@ -49,21 +49,21 @@ export default function Footer() {
             alt="Dots"
             height={70}
             width={180}
-            className="absolute left-10 bottom-20 max-lg:hidden"
+            className="absolute -z-10 left-10 bottom-20 max-lg:hidden"
         />
         <Image
             src="/dots-square.svg"
             alt="Dots"
             height={160}
             width={160}
-            className="absolute right-16 bottom-[-260px] max-lg:hidden"
+            className="absolute -z-10 right-16 bottom-[-260px] max-lg:hidden"
         />
         <Image
             src="/x.svg"
             alt="X"
             height={200}
             width={200}
-            className="absolute right-24 bottom-16 max-lg:hidden"
+            className="absolute -z-10 right-24 bottom-16 max-lg:hidden"
         />
         </>
     )

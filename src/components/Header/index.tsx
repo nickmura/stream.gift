@@ -9,7 +9,7 @@ export default function Header() {
     const links: JSX.Element[] = [
         <Link key={1} className="text-lg" href="/"><span className="text-blue">#</span>home</Link>,
         <Link key={3} className="text-lg" href="/about"><span className="text-blue">#</span>about</Link>,
-        <Link key={2} className="text-lg" href="/dashboard"><span className="text-blue">#</span>dashboard</Link>,
+        /* <Link key={2} className="text-lg" href="/"><span className="text-blue">#</span>dashboard</Link>, */
         /* <Link key={4} className="text-lg" href="/donate"><span className="text-blue">#</span>donate</Link>, */
     ]
 
