@@ -1,22 +1,27 @@
 'use client'
 
-import TwitchButton from "@/components/Header/TwitchButton";
-import { useAccountStore } from "@/lib/states";
-import Checkbox from "@/components/Checkbox";
-import { useEffect, useState } from "react";
-import TwitchAccountUpdate from "@/action/twitchAccountUpdate";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 import { useCurrentAccount } from "@mysten/dapp-kit";
-import VerifySignAddress from '@/components/VerifySignAddress'
-import RecentDonations from "@/action/recentDonations";
-import { truncateWalletAddress } from "@/lib/helper";
+
 import Logout from "@/action/logout";
+import RecentDonations from "@/action/recentDonations";
+import TwitchAccountUpdate from "@/action/twitchAccountUpdate";
+import Checkbox from "@/components/Checkbox";
+import VerifySignAddress from '@/components/VerifySignAddress';
+import { b64DecodeUnicode, truncateWalletAddress } from "@/lib/helper";
+import { useAccountStore } from "@/lib/states";
 
 export default function Dashboard() {
+
+  const router = useRouter();
 
   const setUser = useAccountStore(state => state.setUser);
   const user = useAccountStore(state => state.user);
   const currentAccount = useCurrentAccount();
+
+  const [search, setSearch] = useState<string>("");
   const [recentDonations, setRecentDonations] = useState([]);
   const [submitting, setSubmitting] = useState<boolean>(false);
 
@@ -57,11 +62,11 @@ export default function Dashboard() {
       {user ? (
         <>
         <div className="w-full flex items-center justify-between mb-6">
-          <h1 className="font-bold text-5xl max-w-[70%] max-md:max-w-full max-md:text-center">
+          <h1 className="font-bold text-5xl max-w-[70%] max-md:max-w-full max-md:text-center max-md:text-2xl">
             {user.preferred_username}&#39;s dashboard
           </h1>
           <button
-            className="text-red-600 text-lg font-bold"
+            className="bg-red-600 text-white px-3 py-1 rounded-md text-lg font-bold"
             onClick={() => {
               Logout();
               window.location.reload();
@@ -71,17 +76,19 @@ export default function Dashboard() {
           </button>
         </div>
 
-        <button className="text-gr font-bold text-2xl max-w-[70%] max-md:max-w-full max-md:text-center">
+        <button className="text-gr font-bold text-2xl max-w-[70%] max-md:max-w-full max-md:text-center max-md:w-full">
           Stream Connection Instructions 
         </button>
 
         { user.signature ? <>
-          <p className="text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center">
-          Need to change your address? You can link another wallet and sign & verify a message with another address.
-          Click &quot;Stream Connection Instructions&quot; for help.
+          <p className="text-gr font-medium mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center">
+            Need to change your address? You can link another wallet and sign & verify a message with another address.
+            Click &quot;Stream Connection Instructions&quot; for help.
           </p>
           
-          <p className='text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center'>Donation event listener: {eventURL}</p>
+          <p className='text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center'>
+            Donation event listener: <p className="dots max-md:w-[90vw]">{eventURL}</p>
+          </p>
         </> : <>
           <p className="text-gr font-bold mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center">
             In order to receive donations, you must sign and verify your address. Click &quot;Sign and verify address&quot; to continue.
@@ -89,7 +96,8 @@ export default function Dashboard() {
         </> }
 
         {/* Form */}
-        <label htmlFor="handle-input" className="text-md text-gr block max-md:text-center">SUI Identifier
+        <label htmlFor="handle-input" className="text-md text-gr block max-md:text-center">
+          SUI Identifier
           {user?.signature ? <>
             <span className='text-green-500'> (Verified)</span>
           </> : <>
@@ -149,37 +157,53 @@ export default function Dashboard() {
           <p className="text-gr font-bold mb-7 text-2xl max-w-[70%] max-md:max-w-full max-md:text-center">
             Sign in with Twitch and connect your wallet
           </p>
-          <TwitchButton />
 
-          <div className="mt-24">
-            <p className="text-gr font-bold mb-7 text-2xl max-w-[70%] max-md:max-w-full max-md:text-center">
+          <input
+            placeholder="Search for streamer"
+            onChange={e => setSearch(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === "Enter")
+                router.push(`/${search}`);
+            }}
+            className="
+              w-full max-w-[800px] block p-2
+              border-[1px] border-gr font-bold text-xl mt-16 rounded-md
+              placeholder:text-gr"
+          />
+
+          { recentDonations?.length ? (
+            <p className="mt-24 text-gr font-bold text-2xl max-w-[70%] max-md:max-w-full max-md:text-center">
               Recent Donations
             </p>
+          ) : <></>}
 
-            { recentDonations?.length && (
-              <table>
-                <thead>
-                  <tr>
-                    <th>From</th>
-                    <th>Message</th>
-                    <th>Donation</th>
-                    <th>Receiver</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {recentDonations.map((d: any, i: number) => {
-                    return (
-                      <tr key={i}>
-                        <td>{d.sender_suins ?? truncateWalletAddress(d.sender)}</td>
-                        <td>{d.message !== "null" ? d.message : "-"}</td>
-                        <td>{parseFloat(d.amount)?.toFixed(3)}</td>
-                        <td>{truncateWalletAddress(d.recipient)}</td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            )}
+          <div className="mt-12 mb-2 max-md:overflow-x-auto max-md:mx-auto max-md:w-[320px] ">
+            { recentDonations?.length ? (
+              <>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>From</th>
+                      <th>Message</th>
+                      <th>Donation</th>
+                      <th>Receiver</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {recentDonations.map((d: any, i: number) => {
+                      return (
+                        <tr key={i}>
+                          <td>{d.sender_suins ?? truncateWalletAddress(d.sender)}</td>
+                          <td>{d.message !== "null" ? b64DecodeUnicode(d.message) : "-"}</td>
+                          <td>{parseFloat(d.amount)?.toFixed(3)}</td>
+                          <td>{truncateWalletAddress(d.recipient)}</td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </>
+            ) : <></>}
           </div>
         </>
       )}

@@ -20,7 +20,7 @@ export default function Footer() {
                     </div>
                     <p className="text-gr text-lg">contact@stream.gift</p>
                 </div>
-                <p className="text-white text-lg max-md:text-center max-w-[70%]">Support streamers via cryptocurrency. Submitted to the 
+                <p className="text-white text-lg max-w-[70%] max-md:text-center max-md:mx-auto">Support streamers via cryptocurrency. Submitted to the 
                 &nbsp;<a className='underline  transition' href='https://sui.io/overflow' target="_blank"> Sui Overflow Hackathon 2024</a></p>
             </div>
 

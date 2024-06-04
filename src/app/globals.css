@@ -65,11 +65,16 @@ table {
 
 table th {
   text-align: start;
-  padding-right: 30px;
+  padding-right: 40px;
+  padding-bottom: 20px;
+  font-size: 18px;
 }
 
 table tr td {
-  padding-right: 30px;
+  padding-right: 40px;
+  padding-bottom: 7px;
+  font-size: 17px;
+  font-weight: 500;
 }
 
 ::selection {
@@ -80,6 +85,12 @@ table tr td {
 .vertical-center {
   top: 50%;
   transform: translateY(-50%);
+}
+
+.dots {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 @layer utilities {
