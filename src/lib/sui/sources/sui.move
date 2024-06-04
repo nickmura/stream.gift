@@ -1,5 +1,24 @@
-module twitch_donations::twitch_donations {
+module stream.gift::twitch_donations {
     use std::string::String;
+
+        use sui::event;
+
+        public struct Donation has copy, drop {
+            from: address,
+            to: address,
+            amount: u64,
+
+        }
+
+
+        public entry fun tip(recipient: address, amount: u64, ctx: &mut tx_context::TxContext)  {
+            event::emit(Donation {
+                from: ctx.sender(),
+                to: recipient,
+                amount: amount
+            });
+        }
+    
     // TODO:
     // Table 
     // Send Money Transfer
