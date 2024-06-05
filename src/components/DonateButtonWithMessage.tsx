@@ -33,14 +33,18 @@ export default function DonateButtonWithMessage({
   const bytes = result.bytes; 
   const signature = result.signature;
 
-  // function callDonationPTB(amount: number) {
-  //   let txb = new Transaction();
-  //   txb.setSender(currentAccount?.address ?? "");
-  //   const [coin] = txb.splitCoins(txb.gas, [amount * 10 ** SUI_DECIMALS]);
-  //   txb.transferObjects([coin], recipient);
-  //   return txb.getData()
-  // }
-	function callDonationPTB(amount:number) {
+  let newTxb = false
+  
+  async function callDonationPTB(amount: number) {
+    console.log(recipient, amount, currentAccount?.address)
+    let txb = new Transaction();
+    txb.setSender(currentAccount?.address ?? "");
+    const [coin] = txb.splitCoins(txb.gas, [amount * 10 ** SUI_DECIMALS]);
+    txb.transferObjects([coin], recipient);
+    return await txb.toJSON()
+  }
+
+	function _callDonationPTB(amount:number) {
     console.log(amount)
     console.log(recipient)
 
@@ -77,7 +81,7 @@ export default function DonateButtonWithMessage({
               onClick={() => {
                 signAndExecuteTransaction(
                   {
-                    transaction: callDonationPTB(amount),
+                    transaction: _callDonationPTB(amount),
                   },
                   {
                     onSuccess: async (result) => {
@@ -85,9 +89,11 @@ export default function DonateButtonWithMessage({
                       callback(result.digest);
                       await sendIncomingDonation(result.digest, bytes);
                     },
+                    onError: (error) => {
+                      console.log(error)
+                    }
                   }
-                );
-              }}
+              )}}
             >
               Sign Transaction
             </button>
