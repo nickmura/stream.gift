@@ -72,7 +72,7 @@ export default function DonateUser({address, user}: {address: string, user: stri
                     </>
                 ) : currentAccount && handleInput && !handleMessage ? (
                     <>
-                        <DonateButton recipient={recipientAddress} amount={handleInput} message={handleMessage}/>
+                        <DonateButton recipient={recipientAddress} amount={handleInput} />
                     </>
                 ) : (
                     <>

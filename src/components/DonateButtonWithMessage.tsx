@@ -14,7 +14,7 @@ type SignedMessageResult = {
   bytes: string;
 };
 
-export default function DonateButtonWithMessage({
+export default function DonateButtonWithMessage({ 
   recipient,
   amount,
   result,
@@ -28,18 +28,32 @@ export default function DonateButtonWithMessage({
 }) {
   const { mutate: signAndExecuteTransactionBlock } = useSignAndExecuteTransaction();
   const currentAccount = useCurrentAccount();
-
-  const bytes = result.bytes;
+  const [ serialTx, setSerialTx ] = useState<string>('')
+  const bytes = result.bytes; 
   const signature = result.signature;
 
-  function callDonationPTB(amount: number) {
-    let txb = new TransactionBlock();
-    txb.setSender(currentAccount?.address ?? "");
-    const [coin] = txb.splitCoins(txb.gas, [amount * 10 ** SUI_DECIMALS]);
-    txb.transferObjects([coin], recipient);
-    return txb.serialize();
-  }
+  // function _callDonationPTB(amount: number) {
+  //   let txb = new Transaction();
+  //   txb.setSender(currentAccount?.address ?? "");
+  //   const [coin] = txb.splitCoins(txb.gas, [amount * 10 ** SUI_DECIMALS]);
+  //   txb.transferObjects([coin], recipient);
+  //   return txb.getData()
+  // }
 
+	function callDonationPTB(amount:number) {
+      console.log(amount);1
+      console.log(recipient);
+
+      let txb = new TransactionBlock()
+
+      txb.setSender(currentAccount?.address ?? "")
+      const [coin] = txb.splitCoins(txb.gas, [amount * (10**SUI_DECIMALS)]);
+      txb.transferObjects([coin], recipient)
+      setSerialTx(txb.serialize())
+      // TODO: Creating user signature that consists of the message argument encoded
+      // Sponsored tx??? :hmm:
+      return txb.serialize()
+    }
   async function sendIncomingDonation(digest: string, bytes: string) {
     let res = await fetch(
       `/api/sendIncomingDonation?digest=${digest}&streamer=${recipient}&sender=${currentAccount?.address}&message=${bytes}`
@@ -78,3 +92,7 @@ export default function DonateButtonWithMessage({
     </div>
   );
 }
+function setSerialTx(arg0: string) {
+  throw new Error("Function not implemented.");
+}
+
