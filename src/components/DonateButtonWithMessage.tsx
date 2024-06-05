@@ -4,10 +4,11 @@ import {
   useCurrentAccount,
   useSignAndExecuteTransaction
 } from "@mysten/dapp-kit";
-import { TransactionBlock } from "@mysten/sui.js/transactions";
+import { Transaction } from "@mysten/sui/transactions";
 import { useState } from "react";
 
 import { SUI_DECIMALS } from "@mysten/sui.js/utils";
+import { TransactionBlock } from "@mysten/sui.js/transactions";
 
 type SignedMessageResult = {
   signature: string;
@@ -26,33 +27,37 @@ export default function DonateButtonWithMessage({
   result: SignedMessageResult;
   callback: (...args: any[]) => void;
 }) {
-  const { mutate: signAndExecuteTransactionBlock } = useSignAndExecuteTransaction();
+  const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction();
   const currentAccount = useCurrentAccount();
   const [ serialTx, setSerialTx ] = useState<string>('')
   const bytes = result.bytes; 
   const signature = result.signature;
 
-  // function _callDonationPTB(amount: number) {
+  // function callDonationPTB(amount: number) {
   //   let txb = new Transaction();
   //   txb.setSender(currentAccount?.address ?? "");
   //   const [coin] = txb.splitCoins(txb.gas, [amount * 10 ** SUI_DECIMALS]);
   //   txb.transferObjects([coin], recipient);
   //   return txb.getData()
   // }
-
 	function callDonationPTB(amount:number) {
-      console.log(amount);1
-      console.log(recipient);
+    console.log(amount)
+    console.log(recipient)
 
-      let txb = new TransactionBlock()
+      let txb = new TransactionBlock();
 
-      txb.setSender(currentAccount?.address ?? "")
-      const [coin] = txb.splitCoins(txb.gas, [amount * (10**SUI_DECIMALS)]);
-      txb.transferObjects([coin], recipient)
-      setSerialTx(txb.serialize())
+        txb.setSender(String(currentAccount?.address))
+        const [coin] = txb.splitCoins(txb.gas, [amount * (10**SUI_DECIMALS)])
+
+        txb.transferObjects([coin], recipient)
+        setSerialTx(txb.serialize())
       // TODO: Creating user signature that consists of the message argument encoded
+
       // Sponsored tx??? :hmm:
-      return txb.serialize()
+
+
+        return txb.serialize()
+
     }
   async function sendIncomingDonation(digest: string, bytes: string) {
     let res = await fetch(
@@ -70,7 +75,7 @@ export default function DonateButtonWithMessage({
             <button
               className="px-3 py-1 w-fit rounded-lg text-white bg-blue font-semibold text-lg"
               onClick={() => {
-                signAndExecuteTransactionBlock(
+                signAndExecuteTransaction(
                   {
                     transaction: callDonationPTB(amount),
                   },
