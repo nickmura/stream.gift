@@ -35,6 +35,7 @@ export default function Donate({ params }: { params: { streamer: string } }) {
 
   // Form
   const [amount, setAmount] = useState<number>(0);
+  const [mobile, setMobile] = useState<boolean>(false);
   const [user, setUser] = useState<any>(null);
   const [message, setMessage] = useState<string>("");
   const [digest, setDigest] = useState("");
@@ -68,7 +69,9 @@ export default function Donate({ params }: { params: { streamer: string } }) {
         </div>
       </CustomWrapper>
     );
-
+    function qrDonation() {
+      setMobile(!mobile)
+    }
   return (
     <CustomWrapper>
       <div className="min-h-screen w-full pt-16 flex flex-col items-center">
@@ -86,11 +89,12 @@ export default function Donate({ params }: { params: { streamer: string } }) {
         {step === 0 && (
           <>
             <p className="text-gr font-medium mb-7 text-2xl max-w-[70%] max-md:max-w-full text-center">
-              Send a donation to{" "}
+              Send a tip/donation to{" "}
               <a href={`https://www.twitch.tv/${streamer}`}>{streamer}</a> via
               SUI! Get your donation read on stream.
+              
             </p>
-
+            <button onClick={qrDonation} className='px-2 py-2 border border-opacity-60 rounded-lg'>Mobile</button>
             {/* Form */}
             <div className="max-w-[600px] w-full flex flex-col mx-auto">
               <label
@@ -170,7 +174,7 @@ export default function Donate({ params }: { params: { streamer: string } }) {
                 <p className="text-gr font-bold text-xl italic">{message}</p>
               </div>
             </div>
-
+            
             <p className="mt-5 text-gr font-bold text-xl italic w-full">Sign the message first, then sign the transaction.</p>
 
             <SignMessageButton
@@ -182,6 +186,8 @@ export default function Donate({ params }: { params: { streamer: string } }) {
                 setStep(2);
               }}
             />
+
+        <button className='px-2 py-2 border'>Mobile</button>
           </div>
         )}
 
