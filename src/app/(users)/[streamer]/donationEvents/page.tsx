@@ -40,6 +40,7 @@ export default function DonationEventListener() {
           } else {
             setDonation(false);
           }
+
         } catch(e) {}
       }, 30_000);
   

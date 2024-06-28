@@ -76,9 +76,9 @@ export default function Dashboard() {
           </button>
         </div>
 
-        <button className="text-gr font-bold text-2xl max-w-[70%] max-md:max-w-full max-md:text-center max-md:w-full">
+        <a href='https://www.youtube.com/watch?v=IB0YGOKx8mo' target='_blank' className="text-gr font-bold text-2xl max-w-[70%] max-md:max-w-full max-md:text-center max-md:w-full">
           Stream Connection Instructions 
-        </button>
+        </a>
 
         { user.signature ? <>
           <p className="text-gr font-medium mt-2 mb-5 text-lg max-w-[70%] max-md:max-w-full max-md:text-center">

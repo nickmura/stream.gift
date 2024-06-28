@@ -19,6 +19,7 @@ import StreamerExists from "@/action/streamerExists";
 import DonateButtonWithMessage from "@/components/DonateButtonWithMessage";
 import Image from "next/image";
 import SignMessageButton from "@/components/SignMessageButton";
+import { QRCodeSVG } from "qrcode.react";
 
 type SignedMessageResult = {
   signature: string;
@@ -32,7 +33,6 @@ export default function Donate({ params }: { params: { streamer: string } }) {
   const [exists, setExists] = useState<Boolean | null>(null);
   const [dropdown, setDropdown] = useState(false);
   const [step, setStep] = useState(0);
-
   // Form
   const [amount, setAmount] = useState<number>(0);
   const [mobile, setMobile] = useState<boolean>(false);
@@ -40,7 +40,13 @@ export default function Donate({ params }: { params: { streamer: string } }) {
   const [message, setMessage] = useState<string>("");
   const [digest, setDigest] = useState("");
   const [messageSignResult, setMessageSignResult] = useState<SignedMessageResult>();
+  const [ QRTransaction, setQRTransaction] = useState<'unsent'|'awaiting'|'error'|'success'>('unsent')
 
+  function mobileDonationModal() {
+    setMobile(!mobile)
+  }
+
+  
   useEffect(() => {
     (async () => {
       const streamerExists: Boolean = (await StreamerExists(streamer)).status;
@@ -72,13 +78,21 @@ export default function Donate({ params }: { params: { streamer: string } }) {
     function qrDonation() {
       setMobile(!mobile)
     }
+
+    async function sentTransaction(amount:number, message:string) {
+      setQRTransaction('awaiting')
+      let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}`)
+      if (!res.ok) throw Error('new error')
+      res = await res.json() //@ts-ignore
+      setQRTransaction(res.status)
+    } 
   return (
     <CustomWrapper>
       <div className="min-h-screen w-full pt-16 flex flex-col items-center">
         <h1 className="font-semibold text-5xl max-w-[70%] mb-10 max-md:max-w-full text-center">
-          Donate to {streamer} on{" "}
+          Donate to {streamer} on {" "}
           <a
-            href="https://twitch.tv"
+            href={`https://twitch.tv/${streamer}`}
             target="_blank"
             className="text-[#9F44FE] underline"
           >
@@ -91,10 +105,19 @@ export default function Donate({ params }: { params: { streamer: string } }) {
             <p className="text-gr font-medium mb-7 text-2xl max-w-[70%] max-md:max-w-full text-center">
               Send a tip/donation to{" "}
               <a href={`https://www.twitch.tv/${streamer}`}>{streamer}</a> via
-              SUI! Get your donation read on stream.
+              SUI! Get your donation read on stream. <button onClick={mobileDonationModal}><b>Wanna send a donation via mobile? Click the button.</b></button>
               
             </p>
-            <button onClick={qrDonation} className='px-2 py-2 border border-opacity-60 rounded-lg'>Mobile</button>
+
+            <div className="">
+            {!mobile ? <> 
+              <button onClick={qrDonation} className='px-2 py-2 border border-opacity-60 rounded-lg'>Send a mobile donation</button>
+
+              </> : <>
+              <button onClick={qrDonation} className='px-2 py-2 border border-opacity-60 rounded-lg'>Send a desktop donation</button>
+              </>}
+            </div>
+            
             {/* Form */}
             <div className="max-w-[600px] w-full flex flex-col mx-auto">
               <label
@@ -139,7 +162,7 @@ export default function Donate({ params }: { params: { streamer: string } }) {
                 resize-none border-[1px] border-gr rounded-md p-2 text-gr"
               ></textarea>
 
-              {currentAccount ? (
+              {currentAccount || mobile ? (
                 <button
                   onClick={() => setStep(message ? 1 : 2)}
                   className="rounded-md py-2 px-4 bg-blue font-bold text-lg"
@@ -157,7 +180,7 @@ export default function Donate({ params }: { params: { streamer: string } }) {
             </div>
           </>
         )}
-
+        
         {step === 1 && (
           <div className="max-w-[768px] w-full">
             <div className="w-full flex flex-col justify-start gap-5">
@@ -174,20 +197,61 @@ export default function Donate({ params }: { params: { streamer: string } }) {
                 <p className="text-gr font-bold text-xl italic">{message}</p>
               </div>
             </div>
+            {mobile ? <>
+
+            {QRTransaction == 'unsent' ?  <> {/**Desktop tip/donation */}
+            <p className="mt-5 text-gr font-bold text-xl italic w-full">Scan the QR code, and click the button once the transaction has been sent.</p>
             
+            
+            </> : QRTransaction == 'awaiting' ? <>
+              <p className="mt-5 text-gr font-bold text-xl italic w-full">Scan the QR code, and click the button once the transaction has been sent.</p>
+            
+            </> : QRTransaction == 'error' ? <>
+              <p className="mt-5 text-gr font-bold text-xl italic w-full">Scan the QR code, and click the button once the transaction has been sent.</p>
+            
+            </> : <> </>}
+              <div className="mt-4">
+
+                <QRCodeSVG size={250} value={user.streamer_address}></QRCodeSVG>
+                {QRTransaction == 'unsent' ? <>
+                <button
+                className="px-3 py-1 w-fit rounded-lg text-white bg-blue font-semibold text-lg"
+                onClick={()=>sentTransaction(amount, message)} ></button>
+            
+            
+            </> : QRTransaction == 'awaiting' ? <>
+            <button disabled
+                className="px-3 py-1 w-fit rounded-lg text-white bg-blue font-semibold text-lg opacity-60"
+                onClick={()=>sentTransaction(amount, message)} ></button>
+            
+            </> : QRTransaction == 'error' ? <>
+              <button disabled
+                  className="px-3 py-1 w-fit rounded-lg text-white bg-blue font-semibold text-lg opacity-60"
+                  onClick={()=>sentTransaction(amount, message)} ></button>
+            </> : <> </>}
+              <button disabled
+                className="px-3 py-1 w-fit rounded-lg text-white bg-blue font-semibold text-lg opacity-60"
+                onClick={()=>sentTransaction(amount, message)} ></button>
+              </div>
+
+            </> : <> {/**Desktop tip/donation */}
             <p className="mt-5 text-gr font-bold text-xl italic w-full">Sign the message first, then sign the transaction.</p>
 
-            <SignMessageButton
-              recipient={user.streamer_address}
-              amount={amount}
-              message={message}
-              callback={(result: any) => {
-                setMessageSignResult(result);
-                setStep(2);
-              }}
-            />
+              <SignMessageButton
+                recipient={user.streamer_address}
+                amount={amount}
+                message={message}
+                callback={(result: any) => {
+                  setMessageSignResult(result);
+                  setStep(2);
+                }}
+              />
 
-        <button className='px-2 py-2 border'>Mobile</button>
+
+            </>}
+
+
+
           </div>
         )}
 
@@ -211,6 +275,7 @@ export default function Donate({ params }: { params: { streamer: string } }) {
             </div>
 
             <p className="mt-5 text-gr font-bold text-xl italic">Messaged has been signed, now sign the transaction for your donation to be submitted.</p>
+            
             {message ? (
               <DonateButtonWithMessage
                 recipient={user.streamer_address}
