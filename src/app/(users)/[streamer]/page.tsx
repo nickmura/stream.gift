@@ -20,6 +20,7 @@ import DonateButtonWithMessage from "@/components/DonateButtonWithMessage";
 import Image from "next/image";
 import SignMessageButton from "@/components/SignMessageButton";
 import { QRCodeSVG } from "qrcode.react";
+import { b64DecodeUnicode } from "@/lib/helper";
 
 type SignedMessageResult = {
   signature: string;
@@ -81,7 +82,8 @@ export default function Donate({ params }: { params: { streamer: string } }) {
 
     async function sentTransaction(amount:number, message:string) {
       setQRTransaction('awaiting')
-      let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}`)
+      let b64_message = b64DecodeUnicode(message)
+      let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/check_new_qr?amount=${amount}&message=${b64_message}`)
       if (!res.ok) throw Error('new error')
       res = await res.json() //@ts-ignore
       setQRTransaction(res.status)
