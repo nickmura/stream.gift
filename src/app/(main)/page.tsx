@@ -76,7 +76,8 @@ export default function Dashboard() {
           </button>
         </div>
 
-        <a href='https://www.youtube.com/watch?v=IB0YGOKx8mo' target='_blank' className="text-gr font-bold text-2xl max-w-[70%] max-md:max-w-full max-md:text-center max-md:w-full">
+        <a href='https://www.youtube.com/watch?v=IB0YGOKx8mo' 
+        target='_blank' className="text-gr font-bold text-2xl max-w-[70%] max-md:max-w-full max-md:text-center max-md:w-full underline">
           Stream Connection Instructions 
         </a>
 
