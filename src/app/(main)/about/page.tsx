@@ -15,7 +15,7 @@ export default function GetStarted() {
 
       <p className="text-gr mt-7 font-bold text-lg max-w-[70%] max-md:max-w-full max-md:text-center">stream.gift is a payment solution for streaming platforms & users who want to accept donations via crypto.</p>
 
-      <p className="text-gr mt-7 font-bold text-lg max-w-[70%] max-md:max-w-full max-md:text-center">We developed this over the course of a month in May 2024, utilizing core Sui features such as zkLogin, programmable transaction blocks
+      <p className="text-gr mt-7 font-bold text-lg max-w-[70%] max-md:max-w-full max-md:text-center">We developed this over the course of 2 months in May & June 2024, utilizing core Sui features such as zkLogin, programmable transaction blocks
       and sponsored transactions.
       
       </p>
