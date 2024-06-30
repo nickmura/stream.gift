@@ -196,7 +196,7 @@ export default function Dashboard() {
                         <tr key={i}>
                           <td>{d.sender_suins ?? truncateWalletAddress(d.sender)}</td>
                           <td>{d.message !== "null" ? b64DecodeUnicode(d.message) : "-"}</td>
-                          <td>{parseFloat(d.amount)?.toFixed(3)}</td>
+                          <td>{parseFloat(d.amount)?.toFixed(3)} SUI</td>
                           <td>{truncateWalletAddress(d.recipient)}</td>
                         </tr>
                       )
