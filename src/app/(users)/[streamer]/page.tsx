@@ -108,17 +108,17 @@ export default function Donate({ params }: { params: { streamer: string } }) {
               Send a tip/donation to{" "}
               <a href={`https://www.twitch.tv/${streamer}`}>{streamer}</a> via
               SUI! Get your donation read on stream. {mobile ? <>
-              <button onClick={mobileDonationModal}><b>Wanna send a donation via desktop/browser? <u>Click here.</u></b></button>
+              <button disabled onClick={mobileDonationModal}><b>Wanna send a donation via desktop/browser? <u>Click here.</u></b></button>
               
               </> : <>
-                <button onClick={mobileDonationModal}><b>Wanna send a donation via mobile/QR code? <u>Click here.</u></b></button>
+                <button disabled onClick={mobileDonationModal}><b>Mobile/QR code donations <u>coming soon.</u></b></button>
               </>} 
               
             </p>
 
             <div className="mt-2 mb-4">
             {!mobile ? <> 
-              <button onClick={qrDonation} className='px-2 py-2 border border-opacity-60 rounded-lg'>Mobile donation: OFF</button>
+              <button disabled onClick={qrDonation} className='px-2 py-2 border border-opacity-60 rounded-lg opacity-60'>Mobile donation: OFF</button>
 
               </> : <>
               <button onClick={qrDonation} className='px-2 py-2 border border-opacity-60 rounded-lg'>Mobile donation: ON</button>
