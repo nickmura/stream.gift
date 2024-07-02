@@ -41,7 +41,7 @@ export default function Donate({ params }: { params: { streamer: string } }) {
   const [message, setMessage] = useState<string>("");
   const [digest, setDigest] = useState("");
   const [messageSignResult, setMessageSignResult] = useState<SignedMessageResult>();
-  const [ QRTransaction, setQRTransaction] = useState<'unsent'|'awaiting'|'error'|'success'>('unsent')
+  const [ QRTransaction, setQRTransaction] = useState<string>('unsent')
 
   function mobileDonationModal() {
     setMobile(!mobile)
@@ -85,8 +85,8 @@ export default function Donate({ params }: { params: { streamer: string } }) {
       let b64_message = b64DecodeUnicode(message)
       let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/check_new_qr?amount=${amount}&message=${b64_message}`)
       if (!res.ok) throw Error('new error')
-      res = await res.json() //@ts-ignore
-      setQRTransaction(res.status)
+      res = await res.json()
+      setQRTransaction(res.statusText)
     } 
   return (
     <CustomWrapper>
@@ -111,7 +111,7 @@ export default function Donate({ params }: { params: { streamer: string } }) {
               <button disabled onClick={mobileDonationModal}><b>Wanna send a donation via desktop/browser? <u>Click here.</u></b></button>
               
               </> : <>
-                <button disabled onClick={mobileDonationModal}><b>Mobile/QR code donations <u>coming soon.</u></b></button>
+                <button disabled onClick={mobileDonationModal}><b>Mobile/QR code donations are <u>coming soon.</u></b></button>
               </>} 
               
             </p>
