@@ -15,7 +15,7 @@ export default function GetStarted() {
 
       <p className="text-gr mt-7 font-bold text-lg max-w-[70%] max-md:max-w-full max-md:text-center">stream.gift is a payment solution for streaming platforms & users who want to accept donations via crypto.</p>
 
-      <p className="text-gr mt-7 font-bold text-lg max-w-[70%] max-md:max-w-full max-md:text-center">We developed this over the course of 2 months in May & June 2024, utilizing core Sui features such as zkLogin, programmable transaction blocks
+      <p className="text-gr mt-7 font-bold text-lg max-w-[70%] max-md:max-w-full max-md:text-center">We created & started development of stream.gift in May, utilizing core Sui features such as zkLogin, programmable transaction blocks alongside stream.gift's inception.
       and sponsored transactions.
       
       </p>
@@ -24,20 +24,7 @@ export default function GetStarted() {
       
       </p>
       <div className="w-full flex max-md:justify-center mt-7 ">
-        <ConnectButton
-          id="wallet-connect-button-2"
-          connectText={
-            <div className="flex items-center gap-3">
-              <Image
-                src="/sui.svg"
-                alt="SUI"
-                height={28}
-                width={28}
-              />
-              Connect your Wallet
-            </div>
-          }
-        />
+        
       </div>
     </div>
   );
